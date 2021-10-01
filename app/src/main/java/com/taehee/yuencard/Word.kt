@@ -3,6 +3,20 @@ package com.taehee.yuencard
 object Word {
     private val words =
         mutableListOf(
+            "가",
+            "나",
+            "다",
+            "라",
+            "마",
+            "바",
+            "사",
+            "아",
+            "자",
+            "차",
+            "카",
+            "타",
+            "파",
+            "하",
             "가위",
             "나비",
             "다리",
@@ -63,6 +77,7 @@ object Word {
             "개미",
             "풀",
             "물",
+            "★",
         )
 
     fun getRandomWord(): String {
