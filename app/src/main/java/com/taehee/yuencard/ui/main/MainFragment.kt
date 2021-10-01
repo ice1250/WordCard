@@ -2,20 +2,21 @@ package com.taehee.yuencard.ui.main
 
 import android.graphics.Color
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.taehee.yuencard.R
 import com.taehee.yuencard.databinding.MainFragmentBinding
+import java.util.*
 
-class MainFragment : Fragment(), MainHandler {
+class MainFragment : Fragment(), MainHandler, TextToSpeech.OnInitListener {
 
+    lateinit var tts: TextToSpeech;
     lateinit var binding: MainFragmentBinding
 
     companion object {
@@ -28,6 +29,7 @@ class MainFragment : Fragment(), MainHandler {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        tts = TextToSpeech(requireContext(), this)
         binding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false)
         binding.lifecycleOwner = this
         return binding.root
@@ -40,11 +42,26 @@ class MainFragment : Fragment(), MainHandler {
         binding.handler = this
 
         viewModel.getColor().observe(viewLifecycleOwner,
-            Observer { binding.main.setBackgroundColor(Color.parseColor(it)) })
+            { binding.main.setBackgroundColor(Color.parseColor(it)) })
     }
 
-    override fun onClickCard(textView: TextView) {
-        Log.i("taehee", textView.text.toString())
+    override fun onClickCard(wordText: String) {
+        tts.speak(wordText, TextToSpeech.QUEUE_FLUSH, null, "")
         viewModel.refresh()
+    }
+
+    override fun onInit(status: Int) {
+
+        if (status == TextToSpeech.SUCCESS) {
+            val result = tts.setLanguage(Locale.KOREAN)
+            tts.setSpeechRate(.5f)
+            Log.i("taehee", "tts is $result")
+        }
+    }
+
+    override fun onDestroy() {
+        tts.stop()
+        tts.shutdown()
+        super.onDestroy()
     }
 }

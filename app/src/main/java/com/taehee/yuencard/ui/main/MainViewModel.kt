@@ -4,8 +4,12 @@ import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.taehee.yuencard.CardColor
 import com.taehee.yuencard.Word
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
@@ -32,16 +36,18 @@ class MainViewModel : ViewModel() {
     fun refresh() {
         while (true) {
             val word = Word.getRandomWord()
-            if (!TextUtils.equals(currentColor.value, word)) {
-                currentWord.value = word
-                break;
-            }
-        }
-        while (true) {
             val color = CardColor.getCardColors()
-            if (!TextUtils.equals(currentColor.value, color)) {
-                currentColor.value = color
-                break;
+            if (!TextUtils.equals(currentWord.value, word) && !TextUtils.equals(currentColor.value,
+                    color)
+            ) {
+                viewModelScope.launch(Dispatchers.IO) {
+                    delay(1000)
+                    viewModelScope.launch(Dispatchers.Main) {
+                        currentWord.value = word
+                        currentColor.value = color
+                    }
+                }
+                break
             }
         }
     }

@@ -28,19 +28,20 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:foreground="?android:attr/selectableItemBackground"
-            android:onClick="@{()->handler.onClickCard(wordText)}"
+            android:onClick="@{()->handler.onClickCard(viewModel.word)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent=".5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent=".5">
+            app:layout_constraintWidth_percent=".6">
 
             <TextView
                 android:id="@+id/wordText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:layout_margin="10dp"
                 android:autoSizeTextType="uniform"
                 android:gravity="center"
                 android:lines="1"
