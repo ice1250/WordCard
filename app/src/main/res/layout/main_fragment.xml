@@ -25,6 +25,17 @@
         android:focusable="true"
         tools:context=".ui.main.MainFragment">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/peach"
+            app:layout_constraintBottom_toTopOf="@id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="0dp"

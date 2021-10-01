@@ -59,12 +59,12 @@ class MainFragment : Fragment(), MainHandler, TextToSpeech.OnInitListener {
                         .setFadeOutEnabled(true)
                         .setTimeToLive(100L)
                         .addShapes(Shape.Square, Shape.Circle)
-                        .addSizes(Size(14))
+                        .addSizes(Size(12))
                         .setPosition(motionEvent.x,
                             motionEvent.x,
                             motionEvent.y,
                             motionEvent.y)
-                        .streamFor(100, 500L)
+                        .streamFor(100, 300L)
                 }
                 MotionEvent.ACTION_MOVE -> {
                     binding.particle.build()
@@ -74,12 +74,12 @@ class MainFragment : Fragment(), MainHandler, TextToSpeech.OnInitListener {
                         .setFadeOutEnabled(true)
                         .setTimeToLive(100L)
                         .addShapes(Shape.Square, Shape.Circle)
-                        .addSizes(Size(14))
+                        .addSizes(Size(12))
                         .setPosition(motionEvent.x,
                             motionEvent.x,
                             motionEvent.y,
                             motionEvent.y)
-                        .streamFor(10, 500L)
+                        .streamFor(10, 300L)
                 }
             }
             false
@@ -99,7 +99,7 @@ class MainFragment : Fragment(), MainHandler, TextToSpeech.OnInitListener {
                             motionEvent.x + binding.cardView.x,
                             motionEvent.y + binding.cardView.y,
                             motionEvent.y + binding.cardView.y)
-                        .streamFor(100, 500L)
+                        .streamFor(100, 300L)
                 }
                 MotionEvent.ACTION_MOVE -> {
                     binding.particle.build()
@@ -114,7 +114,7 @@ class MainFragment : Fragment(), MainHandler, TextToSpeech.OnInitListener {
                             motionEvent.x + binding.cardView.x,
                             motionEvent.y + binding.cardView.y,
                             motionEvent.y + binding.cardView.y)
-                        .streamFor(10, 500L)
+                        .streamFor(10, 300L)
                 }
             }
             false
