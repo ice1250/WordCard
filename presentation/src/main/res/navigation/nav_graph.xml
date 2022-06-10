@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/cardFragment">
+    <fragment
+        android:id="@+id/cardFragment"
+        android:name="com.taehee.yuencard.ui.word.CardFragment"
+        android:label="WordFragment"
+        tools:layout="@layout/fragment_card" />
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.taehee.yuencard.ui.edit.EditFragment"
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit" />
+</navigation>

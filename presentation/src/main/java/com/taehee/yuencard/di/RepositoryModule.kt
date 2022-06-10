@@ -1,0 +1,30 @@
+package com.taehee.yuencard.di
+
+import com.taehee.data.repository.CardRepositoryImpl
+import com.taehee.data.repository.TtsRepositoryImpl
+import com.taehee.data.repository.WordRepositoryImpl
+import com.taehee.domain.repository.CardRepository
+import com.taehee.domain.repository.TtsRepository
+import com.taehee.domain.repository.WordRepository
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class RepositoryModule {
+
+    @Singleton
+    @Binds
+    abstract fun bindCardRepository(repository: CardRepositoryImpl): CardRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindWordRepository(repository: WordRepositoryImpl): WordRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindTtsRepository(repository: TtsRepositoryImpl): TtsRepository
+}
