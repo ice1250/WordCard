@@ -1,6 +1,6 @@
 package com.taehee.data.repository
 
-import com.taehee.data.datasource.CardDataSource
+import com.taehee.data.source.CardDataSource
 import com.taehee.domain.model.Card
 import com.taehee.domain.repository.CardRepository
 import javax.inject.Inject

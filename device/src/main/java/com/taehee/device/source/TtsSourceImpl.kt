@@ -1,9 +1,9 @@
-package com.taehee.data.datasource
+package com.taehee.device.source
 
 import android.speech.tts.TextToSpeech
 import javax.inject.Inject
 
-class TtsDataSourceImpl @Inject constructor(private val textToSpeech: TextToSpeech): TtsDataSource {
+class TtsSourceImpl @Inject constructor(private val textToSpeech: TextToSpeech): TtsSource {
     override fun speak(text: String) {
         textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
     }

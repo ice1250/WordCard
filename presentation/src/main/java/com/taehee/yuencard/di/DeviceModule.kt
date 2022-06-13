@@ -12,15 +12,14 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object TtsModule {
-
+object DeviceModule {
     lateinit var textToSpeech: TextToSpeech
 
     @Provides
     @Singleton
-    fun provideTtsUtil(@ApplicationContext appContext: Context): TextToSpeech {
+    fun provideTextToSpeak(@ApplicationContext appContext: Context): TextToSpeech {
         textToSpeech = TextToSpeech(appContext) {
-            textToSpeech.language = Locale.KOREAN
+            textToSpeech.language = Locale.CANADA
         }
         return textToSpeech
     }

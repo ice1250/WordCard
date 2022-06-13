@@ -1,4 +1,4 @@
-package com.taehee.data.datasource
+package com.taehee.data.source
 
 import com.taehee.data.model.WordEntity
 import kotlinx.coroutines.flow.Flow

@@ -1,6 +1,11 @@
 package com.taehee.yuencard.di
 
-import com.taehee.data.datasource.*
+import com.taehee.data.source.CardDataSource
+import com.taehee.data.source.CardDataSourceImpl
+import com.taehee.data.source.WordDataSource
+import com.taehee.data.source.WordDataSourceImpl
+import com.taehee.device.source.TtsSource
+import com.taehee.device.source.TtsSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -21,5 +26,5 @@ abstract class DataSourceModule {
 
     @Singleton
     @Binds
-    abstract fun bindTtsDataSource(source: TtsDataSourceImpl): TtsDataSource
+    abstract fun bindTtsDataSource(source: TtsSourceImpl): TtsSource
 }

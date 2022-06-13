@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.taehee.domain.model.Card
-import com.taehee.domain.usecase.GetCardUseCase
+import com.taehee.domain.usecase.card.GetCardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

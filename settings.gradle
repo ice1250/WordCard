@@ -9,3 +9,4 @@ rootProject.name = "YuenCard"
 include ':presentation'
 include ':domain'
 include ':data'
+include ':device'

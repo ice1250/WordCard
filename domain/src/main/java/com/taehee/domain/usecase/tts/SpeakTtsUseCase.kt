@@ -1,4 +1,4 @@
-package com.taehee.domain.usecase
+package com.taehee.domain.usecase.tts
 
 import com.taehee.domain.repository.TtsRepository
 

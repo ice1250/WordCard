@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.taehee.domain.model.Word
-import com.taehee.domain.usecase.AddWordUseCase
-import com.taehee.domain.usecase.GetWordsUseCase
-import com.taehee.domain.usecase.RemoveWordUseCase
+import com.taehee.domain.usecase.word.AddWordUseCase
+import com.taehee.domain.usecase.word.GetWordsUseCase
+import com.taehee.domain.usecase.word.RemoveWordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

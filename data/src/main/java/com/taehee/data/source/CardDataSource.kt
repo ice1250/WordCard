@@ -1,4 +1,4 @@
-package com.taehee.data.datasource
+package com.taehee.data.source
 
 import com.taehee.domain.model.Card
 

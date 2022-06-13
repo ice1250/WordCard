@@ -1,4 +1,4 @@
-package com.taehee.domain.usecase
+package com.taehee.domain.usecase.card
 
 import com.taehee.domain.model.Card
 import com.taehee.domain.repository.CardRepository

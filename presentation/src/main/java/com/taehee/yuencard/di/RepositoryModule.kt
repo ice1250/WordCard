@@ -1,8 +1,8 @@
 package com.taehee.yuencard.di
 
 import com.taehee.data.repository.CardRepositoryImpl
-import com.taehee.data.repository.TtsRepositoryImpl
 import com.taehee.data.repository.WordRepositoryImpl
+import com.taehee.device.repository.TtsRepositoryImpl
 import com.taehee.domain.repository.CardRepository
 import com.taehee.domain.repository.TtsRepository
 import com.taehee.domain.repository.WordRepository

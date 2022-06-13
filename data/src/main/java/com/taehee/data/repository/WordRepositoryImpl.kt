@@ -1,6 +1,6 @@
 package com.taehee.data.repository
 
-import com.taehee.data.datasource.WordDataSource
+import com.taehee.data.source.WordDataSource
 import com.taehee.data.mapper.map
 import com.taehee.data.mapper.mapperToWord
 import com.taehee.domain.model.Word

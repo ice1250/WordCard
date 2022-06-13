@@ -2,8 +2,8 @@ package com.taehee.yuencard.ui.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.taehee.domain.usecase.SpeakTtsUseCase
-import com.taehee.domain.usecase.StopTtsUseCase
+import com.taehee.domain.usecase.tts.SpeakTtsUseCase
+import com.taehee.domain.usecase.tts.StopTtsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

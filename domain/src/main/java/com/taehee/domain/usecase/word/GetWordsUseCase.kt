@@ -1,4 +1,4 @@
-package com.taehee.domain.usecase
+package com.taehee.domain.usecase.word
 
 import com.taehee.domain.repository.WordRepository
 
