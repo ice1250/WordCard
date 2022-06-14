@@ -22,7 +22,7 @@ class EditViewModel @Inject constructor(
 
     fun addWord(text: String) {
         if (text.isNotEmpty())
-            addWordUseCase(Word(text, System.currentTimeMillis()), viewModelScope)
+            addWordUseCase(Word(text, System.currentTimeMillis(), null), viewModelScope)
     }
 
     fun deleteWord(word: Word) {

@@ -19,7 +19,7 @@ object DeviceModule {
     @Singleton
     fun provideTextToSpeak(@ApplicationContext appContext: Context): TextToSpeech {
         textToSpeech = TextToSpeech(appContext) {
-            textToSpeech.language = Locale.CANADA
+            textToSpeech.language = Locale.KOREAN
         }
         return textToSpeech
     }

@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.taehee.yuencard.ui.word.CardViewModel" />
+            type="com.taehee.yuencard.ui.main.MainViewModel" />
 
         <import type="android.graphics.Color" />
 
@@ -47,7 +47,7 @@
                 android:autoSizeTextType="uniform"
                 android:gravity="center"
                 android:lines="1"
-                android:text="@{viewModel.card.word}"
+                android:text="@{viewModel.card.name}"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 tools:text="가" />

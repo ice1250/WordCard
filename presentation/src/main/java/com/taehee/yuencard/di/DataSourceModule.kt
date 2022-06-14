@@ -1,7 +1,5 @@
 package com.taehee.yuencard.di
 
-import com.taehee.data.source.CardDataSource
-import com.taehee.data.source.CardDataSourceImpl
 import com.taehee.data.source.WordDataSource
 import com.taehee.data.source.WordDataSourceImpl
 import com.taehee.device.source.TtsSource
@@ -15,10 +13,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataSourceModule {
-
-    @Singleton
-    @Binds
-    abstract fun bindCardDataSource(source: CardDataSourceImpl): CardDataSource
 
     @Singleton
     @Binds

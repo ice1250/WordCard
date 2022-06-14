@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.taehee.yuencard.R
 import com.taehee.yuencard.databinding.FragmentCardBinding
 import com.taehee.yuencard.ui.main.MainViewModel
@@ -22,7 +21,8 @@ import nl.dionsegijn.konfetti.models.Size
 class CardFragment : Fragment() {
 
     private lateinit var binding: FragmentCardBinding
-    private val viewModel: CardViewModel by viewModels()
+
+    //    private val viewModel: CardViewModel by viewModels()
     private val sharedViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -37,29 +37,24 @@ class CardFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewModel = viewModel
+        binding.viewModel = sharedViewModel
 
         binding.root.setOnTouchListener { _, motionEvent -> onTouchView(motionEvent) }
         binding.cardView.setOnTouchListener { _, motionEvent -> onTouchView(motionEvent) }
 
         binding.cardView.setOnClickListener {
             sharedViewModel.speakTts(binding.wordText.text.toString())
-            viewModel.getCard(binding.wordText.text.toString(), 1000)
-        }
-
-        sharedViewModel.needRefresh.observe(viewLifecycleOwner) {
-            if (it == true) {
-                viewModel.getCard(binding.wordText.text.toString(), 0)
-                sharedViewModel.clear()
-            }
+            sharedViewModel.refreshCard()
         }
         subscribeCard()
     }
 
     private fun subscribeCard() {
-        viewModel.card.observe(viewLifecycleOwner) {
+        sharedViewModel.card.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.main.setBackgroundColor(Color.parseColor(it.color))
+            } else {
+                binding.main.setBackgroundColor(Color.parseColor("#ffffff"))
             }
         }
     }

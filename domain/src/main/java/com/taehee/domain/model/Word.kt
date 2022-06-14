@@ -1,6 +1,7 @@
 package com.taehee.domain.model
 
 data class Word(
-    var name: String,
-    var time: Long,
+    val name: String,
+    val time: Long,
+    val color: String?
 )

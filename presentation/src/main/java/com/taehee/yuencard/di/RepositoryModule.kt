@@ -1,9 +1,7 @@
 package com.taehee.yuencard.di
 
-import com.taehee.data.repository.CardRepositoryImpl
 import com.taehee.data.repository.WordRepositoryImpl
 import com.taehee.device.repository.TtsRepositoryImpl
-import com.taehee.domain.repository.CardRepository
 import com.taehee.domain.repository.TtsRepository
 import com.taehee.domain.repository.WordRepository
 import dagger.Binds
@@ -15,10 +13,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
-
-    @Singleton
-    @Binds
-    abstract fun bindCardRepository(repository: CardRepositoryImpl): CardRepository
 
     @Singleton
     @Binds

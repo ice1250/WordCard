@@ -40,13 +40,13 @@ class EditFragment : Fragment(), OnEditClickListener {
         if (text.isNotEmpty()) {
             viewModel.addWord(text)
             binding.editText.text.clear()
-            sharedViewModel.dataChanged()
+            sharedViewModel.refreshCard()
         }
     }
 
     override fun onDeleteClick(word: Word) {
         viewModel.deleteWord(word)
-        sharedViewModel.dataChanged()
+        sharedViewModel.refreshCard()
     }
 
     override fun onClick(word: Word) {

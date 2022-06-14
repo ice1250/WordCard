@@ -10,4 +10,6 @@ interface WordRepository {
     suspend fun addWord(word: Word)
 
     suspend fun removeWord(word: Word)
+
+    suspend fun getRandomWord(name: String?): Word?
 }
