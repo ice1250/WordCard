@@ -6,12 +6,12 @@
     app:startDestination="@id/cardFragment">
     <fragment
         android:id="@+id/cardFragment"
-        android:name="com.taehee.yuencard.ui.word.CardFragment"
+        android:name="com.taehee.wordcard.ui.word.CardFragment"
         android:label="WordFragment"
         tools:layout="@layout/fragment_card" />
     <fragment
         android:id="@+id/editFragment"
-        android:name="com.taehee.yuencard.ui.edit.EditFragment"
+        android:name="com.taehee.wordcard.ui.edit.EditFragment"
         android:label="fragment_edit"
         tools:layout="@layout/fragment_edit" />
 </navigation>

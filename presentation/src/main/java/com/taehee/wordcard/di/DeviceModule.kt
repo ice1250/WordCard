@@ -1,4 +1,4 @@
-package com.taehee.yuencard.di
+package com.taehee.wordcard.di
 
 import android.content.Context
 import android.speech.tts.TextToSpeech

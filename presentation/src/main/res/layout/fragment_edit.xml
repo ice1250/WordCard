@@ -5,11 +5,11 @@
     <data>
         <variable
             name="viewModel"
-            type="com.taehee.yuencard.ui.edit.EditViewModel" />
+            type="com.taehee.wordcard.ui.edit.EditViewModel" />
 
         <variable
             name="callback"
-            type="com.taehee.yuencard.ui.edit.OnEditClickListener" />
+            type="com.taehee.wordcard.ui.edit.OnEditClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

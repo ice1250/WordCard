@@ -1,4 +1,4 @@
-package com.taehee.yuencard.ui.edit
+package com.taehee.wordcard.ui.edit
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.taehee.domain.model.Word
-import com.taehee.yuencard.R
-import com.taehee.yuencard.databinding.ViewholderEditBinding
+import com.taehee.wordcard.R
+import com.taehee.wordcard.databinding.ViewholderEditBinding
 
 class EditRecyclerViewAdapter(private val listener: OnEditClickListener) :
     RecyclerView.Adapter<EditRecyclerViewAdapter.EditRecyclerViewHolder>() {

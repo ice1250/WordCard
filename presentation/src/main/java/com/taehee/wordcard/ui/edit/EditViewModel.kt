@@ -1,4 +1,4 @@
-package com.taehee.yuencard.ui.edit
+package com.taehee.wordcard.ui.edit
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -22,7 +22,7 @@ class EditViewModel @Inject constructor(
 
     fun addWord(text: String) {
         if (text.isNotEmpty())
-            addWordUseCase(Word(text, System.currentTimeMillis(), null), viewModelScope)
+            addWordUseCase(Word(text, System.currentTimeMillis()), viewModelScope)
     }
 
     fun deleteWord(word: Word) {

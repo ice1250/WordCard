@@ -1,4 +1,4 @@
-package com.taehee.yuencard.ui.edit
+package com.taehee.wordcard.ui.edit
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView

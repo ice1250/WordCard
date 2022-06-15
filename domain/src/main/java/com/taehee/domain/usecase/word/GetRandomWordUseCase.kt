@@ -7,23 +7,18 @@ import kotlinx.coroutines.*
 class GetRandomWordUseCase(private val repository: WordRepository) {
 
     operator fun invoke(
-        scope: CoroutineScope,
-        onResult: (Word?) -> Unit = {},
-    ) {
-        invoke(null, scope, onResult)
-    }
-
-    operator fun invoke(
-        text: String?,
+        text: String? = null,
+        isDelay: Boolean = false,
         scope: CoroutineScope,
         onResult: (Word?) -> Unit = {},
     ) {
         scope.launch(Dispatchers.Main) {
-            val deferred = async(Dispatchers.IO) {
-                delay(1000)
+            onResult(withContext(Dispatchers.IO) {
+                if (isDelay) {
+                    delay(1000)
+                }
                 repository.getRandomWord(text)
-            }
-            onResult(deferred.await())
+            })
         }
     }
 }

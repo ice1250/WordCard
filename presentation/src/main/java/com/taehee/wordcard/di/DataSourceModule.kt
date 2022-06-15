@@ -1,4 +1,4 @@
-package com.taehee.yuencard.di
+package com.taehee.wordcard.di
 
 import com.taehee.data.source.WordDataSource
 import com.taehee.data.source.WordDataSourceImpl

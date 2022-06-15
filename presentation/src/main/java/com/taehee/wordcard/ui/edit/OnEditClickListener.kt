@@ -1,4 +1,4 @@
-package com.taehee.yuencard.ui.edit
+package com.taehee.wordcard.ui.edit
 
 import com.taehee.domain.model.Word
 

@@ -9,7 +9,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.taehee.yuencard"
+        applicationId "com.taehee.wordcard"
         minSdk 26
         targetSdk 31
         versionCode 1
@@ -34,7 +34,7 @@ android {
     dataBinding {
         enabled = true
     }
-    namespace 'com.taehee.yuencard'
+    namespace 'com.taehee.wordcard'
 }
 
 dependencies {
@@ -54,6 +54,9 @@ dependencies {
     // Navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
+
+    // Splash Screen
+    implementation 'androidx.core:core-splashscreen:1.0.0-rc01'
 
     // Coroutine
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1-native-mt'

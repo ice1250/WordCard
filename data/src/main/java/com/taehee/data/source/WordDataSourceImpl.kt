@@ -9,31 +9,14 @@ class WordDataSourceImpl @Inject constructor(private val wordDao: WordDao) : Wor
 
     override fun getWords() = wordDao.getWords()
 
-    override fun getRandomWord(name: String?): WordEntity? {
+    override fun getRandomWord(name: String?): WordEntity? = wordDao.getRandomWord(
+        if (wordDao.getCount() >= 2) name
+        else null
+    )?.apply { color = colors[SecureRandom.getInstanceStrong().nextInt((colors.size))] }
 
-        wordDao.getRandomWord(
-            when {
-                wordDao.getCount() < 2 -> null
-                else -> {
-                    name
-                }
-            }
-        ).also {
-            return if (it == null) null
-            else {
-                it.color = colors[SecureRandom.getInstanceStrong().nextInt((colors.size))]
-                it
-            }
-        }
-    }
+    override fun addWord(word: WordEntity) = wordDao.addWord(word)
 
-    override fun addWord(word: WordEntity) {
-        wordDao.addWord(word)
-    }
-
-    override fun removeWord(word: WordEntity) {
-        wordDao.removeWord(word)
-    }
+    override fun removeWord(word: WordEntity) = wordDao.removeWord(word)
 }
 
 private val colors =

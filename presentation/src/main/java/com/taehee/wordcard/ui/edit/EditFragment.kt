@@ -1,4 +1,4 @@
-package com.taehee.yuencard.ui.edit
+package com.taehee.wordcard.ui.edit
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.taehee.domain.model.Word
-import com.taehee.yuencard.R
-import com.taehee.yuencard.databinding.FragmentEditBinding
-import com.taehee.yuencard.ui.main.MainViewModel
+import com.taehee.wordcard.R
+import com.taehee.wordcard.databinding.FragmentEditBinding
+import com.taehee.wordcard.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

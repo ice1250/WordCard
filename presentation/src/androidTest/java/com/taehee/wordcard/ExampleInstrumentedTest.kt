@@ -1,4 +1,4 @@
-package com.taehee.yuencard
+package com.taehee.wordcard
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.taehee.yuencard", appContext.packageName)
+        assertEquals("com.taehee.wordcard", appContext.packageName)
     }
 }

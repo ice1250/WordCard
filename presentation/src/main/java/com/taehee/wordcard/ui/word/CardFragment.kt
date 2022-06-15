@@ -1,4 +1,4 @@
-package com.taehee.yuencard.ui.word
+package com.taehee.wordcard.ui.word
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -10,9 +10,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.taehee.yuencard.R
-import com.taehee.yuencard.databinding.FragmentCardBinding
-import com.taehee.yuencard.ui.main.MainViewModel
+import com.taehee.wordcard.R
+import com.taehee.wordcard.databinding.FragmentCardBinding
+import com.taehee.wordcard.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
@@ -22,7 +22,6 @@ class CardFragment : Fragment() {
 
     private lateinit var binding: FragmentCardBinding
 
-    //    private val viewModel: CardViewModel by viewModels()
     private val sharedViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -41,11 +40,7 @@ class CardFragment : Fragment() {
 
         binding.root.setOnTouchListener { _, motionEvent -> onTouchView(motionEvent) }
         binding.cardView.setOnTouchListener { _, motionEvent -> onTouchView(motionEvent) }
-
-        binding.cardView.setOnClickListener {
-            sharedViewModel.speakTts(binding.wordText.text.toString())
-            sharedViewModel.refreshCard()
-        }
+        binding.cardView.setOnClickListener { sharedViewModel.speakTts(binding.wordText.text.toString(), true) }
         subscribeCard()
     }
 

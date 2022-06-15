@@ -5,7 +5,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "YuenCard"
+rootProject.name = "WordCard"
 include ':presentation'
 include ':domain'
 include ':data'

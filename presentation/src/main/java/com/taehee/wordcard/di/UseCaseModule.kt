@@ -1,4 +1,4 @@
-package com.taehee.yuencard.di
+package com.taehee.wordcard.di
 
 import com.taehee.domain.repository.TtsRepository
 import com.taehee.domain.repository.WordRepository
