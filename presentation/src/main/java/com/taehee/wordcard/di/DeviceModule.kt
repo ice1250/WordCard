@@ -2,6 +2,7 @@ package com.taehee.wordcard.di
 
 import android.content.Context
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +19,7 @@ object DeviceModule {
     @Provides
     @Singleton
     fun provideTextToSpeak(@ApplicationContext appContext: Context): TextToSpeech {
+        Log.i("taehee", "provideTextToSpeak")
         textToSpeech = TextToSpeech(appContext) {
             textToSpeech.language = Locale.KOREAN
         }

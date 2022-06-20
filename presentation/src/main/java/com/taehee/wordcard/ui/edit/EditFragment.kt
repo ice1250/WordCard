@@ -8,14 +8,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.taehee.domain.model.Word
 import com.taehee.wordcard.R
 import com.taehee.wordcard.databinding.FragmentEditBinding
 import com.taehee.wordcard.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EditFragment : Fragment(), OnEditClickListener {
+class EditFragment : Fragment() {
 
     private val viewModel: EditViewModel by viewModels()
     private val sharedViewModel: MainViewModel by activityViewModels()
@@ -32,24 +31,23 @@ class EditFragment : Fragment(), OnEditClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.callback = this
         binding.viewModel = viewModel
-    }
-
-    override fun onInsertClick(text: String) {
-        if (text.isNotEmpty()) {
-            viewModel.addWord(text)
-            binding.editText.text.clear()
+        binding.recyclerView.adapter = EditRecyclerViewAdapter(
+            {
+                sharedViewModel.speakTts(it.name)
+            }
+        ) {
+            viewModel.deleteWord(it)
             sharedViewModel.refreshCard()
+        }
+
+        binding.button.setOnClickListener {
+            if (binding.editText.text.isNotEmpty()) {
+                viewModel.addWord(binding.editText.text.toString())
+                binding.editText.text.clear()
+                sharedViewModel.refreshCard()
+            }
         }
     }
 
-    override fun onDeleteClick(word: Word) {
-        viewModel.deleteWord(word)
-        sharedViewModel.refreshCard()
-    }
-
-    override fun onClick(word: Word) {
-        sharedViewModel.speakTts(word.name)
-    }
 }

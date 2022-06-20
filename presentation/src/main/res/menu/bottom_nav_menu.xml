@@ -5,7 +5,10 @@
         android:id="@+id/cardFragment"
         android:icon="@drawable/ic_home_black_24"
         android:title="@string/home" />
-
+    <item
+        android:id="@+id/gameFragment"
+        android:icon="@drawable/ic_game_black_24"
+        android:title="@string/game" />
     <item
         android:id="@+id/editFragment"
         android:icon="@drawable/ic_edit_black_24"

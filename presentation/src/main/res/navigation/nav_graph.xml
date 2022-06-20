@@ -7,11 +7,16 @@
     <fragment
         android:id="@+id/cardFragment"
         android:name="com.taehee.wordcard.ui.word.CardFragment"
-        android:label="WordFragment"
+        android:label="fragment_card"
         tools:layout="@layout/fragment_card" />
     <fragment
         android:id="@+id/editFragment"
         android:name="com.taehee.wordcard.ui.edit.EditFragment"
         android:label="fragment_edit"
         tools:layout="@layout/fragment_edit" />
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.taehee.wordcard.ui.game.GameFragment"
+        android:label="fragment_game"
+        tools:layout="@layout/fragment_game" />
 </navigation>

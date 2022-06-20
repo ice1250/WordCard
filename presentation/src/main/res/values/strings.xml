@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">소연카드</string>
-    <string name="home">Home</string>
-    <string name="edit">Edit</string>
+    <string name="home">카드</string>
+    <string name="edit">수정</string>
+    <string name="game">게임</string>
 </resources>
