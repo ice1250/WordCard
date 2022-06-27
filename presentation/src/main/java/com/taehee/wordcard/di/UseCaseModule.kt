@@ -2,12 +2,9 @@ package com.taehee.wordcard.di
 
 import com.taehee.domain.repository.TtsRepository
 import com.taehee.domain.repository.WordRepository
-import com.taehee.domain.usecase.word.GetCardUseCase
 import com.taehee.domain.usecase.tts.SpeakTtsUseCase
 import com.taehee.domain.usecase.tts.StopTtsUseCase
-import com.taehee.domain.usecase.word.AddWordUseCase
-import com.taehee.domain.usecase.word.GetWordsUseCase
-import com.taehee.domain.usecase.word.RemoveWordUseCase
+import com.taehee.domain.usecase.word.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +17,11 @@ object UseCaseModule {
     @Provides
     fun provideGetWordUseCase(repository: WordRepository): GetWordsUseCase {
         return GetWordsUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetGameUseCase(repository: WordRepository): GetGameUseCase {
+        return GetGameUseCase(repository)
     }
 
     @Provides

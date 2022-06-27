@@ -1,12 +1,12 @@
-package com.taehee.wordcard.ui.word
+package com.taehee.wordcard.ui.card
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.taehee.domain.model.Card
-import com.taehee.domain.usecase.word.GetCardUseCase
 import com.taehee.domain.usecase.tts.SpeakTtsUseCase
+import com.taehee.domain.usecase.word.GetCardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -20,14 +20,14 @@ class CardViewModel @Inject constructor(
     val completeLoading: LiveData<Boolean> get() = _completeLoading
 
     val card: MutableLiveData<Card> = MutableLiveData<Card>().apply {
-        getCard(null)
+        getCard()
     }
 
     fun speak(text: String) {
         speakTtsUseCase(text)
     }
 
-    fun getCard(text: String?) {
+    fun getCard(text: String? = null) {
         _completeLoading.value = false
         getCardUseCase(text, viewModelScope) {
             card.value = it

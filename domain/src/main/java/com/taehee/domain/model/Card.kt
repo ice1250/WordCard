@@ -2,6 +2,6 @@ package com.taehee.domain.model
 
 data class Card(
     val name: String,
-    val time: Long,
-    var color: Int,
-)
+) {
+    var color: Int = -1
+}

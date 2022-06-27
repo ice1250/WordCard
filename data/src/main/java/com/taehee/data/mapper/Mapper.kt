@@ -3,6 +3,7 @@ package com.taehee.data.mapper
 import android.graphics.Color
 import com.taehee.data.model.WordEntity
 import com.taehee.domain.model.Card
+import com.taehee.domain.model.Game
 import com.taehee.domain.model.Word
 import java.security.SecureRandom
 
@@ -15,7 +16,15 @@ fun WordEntity.toWord(): Word {
 }
 
 fun WordEntity.toCard(): Card {
-    return Card(name, time, colors[SecureRandom.getInstanceStrong().nextInt((colors.size))])
+    return Card(name).apply {
+        color = colors[SecureRandom.getInstanceStrong().nextInt((colors.size))]
+    }
+}
+
+fun WordEntity.toGame(): Game {
+    return Game(name).apply {
+        isSuccess = false
+    }
 }
 
 fun mapperToWordEntity(words: List<Word>): List<WordEntity> {

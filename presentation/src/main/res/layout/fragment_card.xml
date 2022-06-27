@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.taehee.wordcard.ui.word.CardViewModel" />
+            type="com.taehee.wordcard.ui.card.CardViewModel" />
 
         <import type="android.graphics.Color" />
 
@@ -23,7 +23,7 @@
         android:clickable="true"
         android:background="@{viewModel.card.color}"
         android:focusable="true"
-        tools:context=".ui.word.CardFragment">
+        tools:context=".ui.card.CardFragment">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"

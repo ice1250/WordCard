@@ -1,4 +1,4 @@
-package com.taehee.wordcard.ui.word
+package com.taehee.wordcard.ui.card
 
 import android.annotation.SuppressLint
 import android.graphics.Color

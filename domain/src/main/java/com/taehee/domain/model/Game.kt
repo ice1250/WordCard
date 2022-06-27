@@ -1,4 +1,7 @@
 package com.taehee.domain.model
 
-class Game {
+data class Game(
+    val name: String,
+) {
+    var isSuccess: Boolean = false
 }

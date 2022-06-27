@@ -6,7 +6,7 @@
     app:startDestination="@id/cardFragment">
     <fragment
         android:id="@+id/cardFragment"
-        android:name="com.taehee.wordcard.ui.word.CardFragment"
+        android:name="com.taehee.wordcard.ui.card.CardFragment"
         android:label="fragment_card"
         tools:layout="@layout/fragment_card" />
     <fragment
