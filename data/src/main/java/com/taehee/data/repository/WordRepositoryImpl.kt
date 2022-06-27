@@ -2,7 +2,9 @@ package com.taehee.data.repository
 
 import com.taehee.data.mapper.map
 import com.taehee.data.mapper.mapperToWord
+import com.taehee.data.mapper.toCard
 import com.taehee.data.source.WordDataSource
+import com.taehee.domain.model.Card
 import com.taehee.domain.model.Word
 import com.taehee.domain.repository.WordRepository
 import kotlinx.coroutines.flow.map
@@ -15,12 +17,12 @@ class WordRepositoryImpl @Inject constructor(
     override fun getWords() =
         dataSource.getWords().map { mapperToWord(it) }
 
-    override suspend fun getRandomWord(name: String?): Word? {
-        return dataSource.getRandomWord(name)?.map()
-    }
-
     override suspend fun addWord(word: Word) = dataSource.addWord(word.map())
 
     override suspend fun removeWord(word: Word) = dataSource.removeWord(word.map())
+
+    override suspend fun getCard(name: String?): Card? {
+        return dataSource.getRandomWord(name)?.toCard()
+    }
 
 }

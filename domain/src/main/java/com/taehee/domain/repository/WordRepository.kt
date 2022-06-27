@@ -1,5 +1,6 @@
 package com.taehee.domain.repository
 
+import com.taehee.domain.model.Card
 import com.taehee.domain.model.Word
 import kotlinx.coroutines.flow.Flow
 
@@ -11,5 +12,5 @@ interface WordRepository {
 
     suspend fun removeWord(word: Word)
 
-    suspend fun getRandomWord(name: String?): Word?
+    suspend fun getCard(name: String?): Card?
 }
