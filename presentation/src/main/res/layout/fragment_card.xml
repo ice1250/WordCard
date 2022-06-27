@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.taehee.wordcard.ui.main.MainViewModel" />
+            type="com.taehee.wordcard.ui.word.CardViewModel" />
 
         <import type="android.graphics.Color" />
 
@@ -21,6 +21,7 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="?attr/actionBarSize"
         android:clickable="true"
+        android:background="@{viewModel.card.color}"
         android:focusable="true"
         tools:context=".ui.word.CardFragment">
 

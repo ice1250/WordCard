@@ -8,15 +8,12 @@ class GetRandomWordUseCase(private val repository: WordRepository) {
 
     operator fun invoke(
         text: String? = null,
-        isDelay: Boolean = false,
         scope: CoroutineScope,
         onResult: (Word?) -> Unit = {},
     ) {
         scope.launch(Dispatchers.Main) {
             onResult(withContext(Dispatchers.IO) {
-                if (isDelay) {
-                    delay(1000)
-                }
+                delay(1000)
                 repository.getRandomWord(text)
             })
         }

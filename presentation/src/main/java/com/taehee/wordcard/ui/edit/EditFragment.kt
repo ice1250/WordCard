@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class EditFragment : Fragment() {
 
     private val viewModel: EditViewModel by viewModels()
-    private val sharedViewModel: MainViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var binding: FragmentEditBinding
 
     override fun onCreateView(
@@ -34,18 +34,18 @@ class EditFragment : Fragment() {
         binding.viewModel = viewModel
         binding.recyclerView.adapter = EditRecyclerViewAdapter(
             {
-                sharedViewModel.speakTts(it.name)
+                viewModel.wordClicked(it.name)
+            }, {
+                viewModel.deleteWord(it)
+                mainViewModel.wordChange()
             }
-        ) {
-            viewModel.deleteWord(it)
-            sharedViewModel.refreshCard()
-        }
+        )
 
         binding.button.setOnClickListener {
             if (binding.editText.text.isNotEmpty()) {
                 viewModel.addWord(binding.editText.text.toString())
                 binding.editText.text.clear()
-                sharedViewModel.refreshCard()
+                mainViewModel.wordChange()
             }
         }
     }

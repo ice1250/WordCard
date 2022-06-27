@@ -28,15 +28,10 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.viewModel = viewModel
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.adapter = GameRecyclerViewAdapter()
         binding.recyclerView.addItemDecoration(GameItemDecoration(4, 10))
-
-        viewModel.words.observe(viewLifecycleOwner) {
-            val adapter = binding.recyclerView.adapter as GameRecyclerViewAdapter
-            adapter.setItems(it)
-        }
     }
 
 }

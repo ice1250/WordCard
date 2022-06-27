@@ -6,7 +6,7 @@ data class Word(
     val name: String,
     val time: Long,
 ) {
-    var color: String? = null
+    var color: Int = 0
 
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Word>() {

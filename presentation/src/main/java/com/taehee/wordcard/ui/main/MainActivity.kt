@@ -32,29 +32,25 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
         navView.setupWithNavController(navController)
+        initSplash()
+    }
 
+    private fun initSplash() {
         val content: View = findViewById(android.R.id.content)
         content.viewTreeObserver.addOnPreDrawListener(
             object : ViewTreeObserver.OnPreDrawListener {
                 override fun onPreDraw(): Boolean {
-                    return if (sharedViewModel.isReady) {
+                    return if (sharedViewModel.completeInit.value == true) {
                         content.viewTreeObserver.removeOnPreDrawListener(this)
                         true
-                    } else {
-                        false
-                    }
+                    } else false
                 }
             },
         )
-        sharedViewModel.init()
     }
 
     private fun hideSystemUI() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
     }
 
-    override fun onDestroy() {
-        sharedViewModel.stopTts()
-        super.onDestroy()
-    }
 }

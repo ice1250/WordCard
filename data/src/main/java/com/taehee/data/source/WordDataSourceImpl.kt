@@ -1,5 +1,6 @@
 package com.taehee.data.source
 
+import android.graphics.Color
 import com.taehee.data.database.WordDao
 import com.taehee.data.model.WordEntity
 import java.security.SecureRandom
@@ -21,9 +22,9 @@ class WordDataSourceImpl @Inject constructor(private val wordDao: WordDao) : Wor
 
 private val colors =
     mutableListOf(
-        "#ffc0cb",
-        "#ffb6c1",
-        "#db7093",
-        "#ff1493",
-        "#ff69b4",
+        Color.parseColor("#ffc0cb"),
+        Color.parseColor("#ffb6c1"),
+        Color.parseColor("#db7093"),
+        Color.parseColor("#ff1493"),
+        Color.parseColor("#ff69b4"),
     )

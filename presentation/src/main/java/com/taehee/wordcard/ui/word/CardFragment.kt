@@ -10,9 +10,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.taehee.wordcard.R
 import com.taehee.wordcard.databinding.FragmentCardBinding
 import com.taehee.wordcard.ui.main.MainViewModel
+import com.taehee.wordcard.util.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
@@ -22,7 +24,8 @@ class CardFragment : Fragment() {
 
     private lateinit var binding: FragmentCardBinding
 
-    private val sharedViewModel: MainViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
+    private val viewModel: CardViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,40 +39,33 @@ class CardFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewModel = sharedViewModel
+        binding.viewModel = viewModel
 
         binding.root.setOnTouchListener { _, motionEvent -> onTouchView(motionEvent) }
         binding.cardView.setOnTouchListener { _, motionEvent -> onTouchView(motionEvent) }
-        binding.cardView.setOnClickListener { sharedViewModel.speakTts(binding.wordText.text.toString(), true) }
-        subscribeCard()
-    }
-
-    private fun subscribeCard() {
-        sharedViewModel.card.observe(viewLifecycleOwner) {
-            if (it != null) {
-                binding.main.setBackgroundColor(Color.parseColor(it.color))
-            } else {
-                binding.main.setBackgroundColor(Color.parseColor("#ffffff"))
+        binding.cardView.setOnClickListener {
+            if (viewModel.completeLoading.value == true) {
+                viewModel.speak(binding.wordText.text.toString())
+                mainViewModel.wordChange()
             }
         }
+        mainViewModel.wordChanged.observe(viewLifecycleOwner, EventObserver {
+            viewModel.getCard(binding.wordText.text.toString())
+        })
     }
 
     private fun onTouchView(motionEvent: MotionEvent): Boolean {
-        when (motionEvent.action) {
-            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
-                with(binding) {
-                    particle.build()
-                        .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
-                        .setDirection(0.0, 359.0)
-                        .setSpeed(1f, 5f)
-                        .setFadeOutEnabled(true)
-                        .setTimeToLive(100L)
-                        .addShapes(Shape.Square, Shape.Circle)
-                        .addSizes(Size(12))
-                        .setPosition(motionEvent.rawX, motionEvent.rawY)
-                        .streamFor(12, 300L)
-                }
-            }
+        if (motionEvent.action == MotionEvent.ACTION_DOWN || motionEvent.action == MotionEvent.ACTION_MOVE) {
+            binding.particle.build()
+                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(100L)
+                .addShapes(Shape.Square, Shape.Circle)
+                .addSizes(Size(12))
+                .setPosition(motionEvent.rawX, motionEvent.rawY)
+                .streamFor(12, 300L)
         }
         return false
     }
