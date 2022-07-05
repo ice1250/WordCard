@@ -9,6 +9,7 @@ import com.taehee.domain.model.Word
 @BindingAdapter("items")
 fun RecyclerView.items(items: List<Word>?) {
     (adapter as? ListAdapter<Word, *>)?.submitList(items)
+    smoothScrollToPosition(adapter!!.itemCount)
 }
 
 @BindingAdapter("gameItems")

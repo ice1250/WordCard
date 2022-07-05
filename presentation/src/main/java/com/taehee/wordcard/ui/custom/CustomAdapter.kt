@@ -1,4 +1,4 @@
-package com.taehee.wordcard.ui.adapter
+package com.taehee.wordcard.ui.custom
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

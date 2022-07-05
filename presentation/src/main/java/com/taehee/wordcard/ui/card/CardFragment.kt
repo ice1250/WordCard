@@ -27,6 +27,14 @@ class CardFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
     private val viewModel: CardViewModel by viewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+//        val callback = requireActivity().onBackPressedDispatcher.addCallback(this){
+//
+//        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -52,6 +60,14 @@ class CardFragment : Fragment() {
         mainViewModel.wordChanged.observe(viewLifecycleOwner, EventObserver {
             viewModel.getCard(binding.wordText.text.toString())
         })
+
+//        if (savedInstanceState == null) {
+//            activity?.onBackPressedDispatcher?.addCallback(object : OnBackPressedCallback(true){
+//                override fun handleOnBackPressed() {
+//                    activity?.finish()
+//                }
+//            })
+//        }
     }
 
     private fun onTouchView(motionEvent: MotionEvent): Boolean {

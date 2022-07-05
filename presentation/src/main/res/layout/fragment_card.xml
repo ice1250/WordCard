@@ -19,9 +19,8 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="?attr/actionBarSize"
-        android:clickable="true"
         android:background="@{viewModel.card.color}"
+        android:clickable="true"
         android:focusable="true"
         tools:context=".ui.card.CardFragment">
 

@@ -10,6 +10,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.taehee.wordcard.R
 import com.taehee.wordcard.databinding.FragmentEditBinding
+import com.taehee.wordcard.ui.custom.isScrollable
+import com.taehee.wordcard.ui.custom.setStackFromEnd
 import com.taehee.wordcard.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,14 +34,6 @@ class EditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-        binding.recyclerView.adapter = EditRecyclerViewAdapter(
-            {
-                viewModel.wordClicked(it.name)
-            }, {
-                viewModel.deleteWord(it)
-                mainViewModel.wordChange()
-            }
-        )
 
         binding.button.setOnClickListener {
             if (binding.editText.text.isNotEmpty()) {
@@ -47,6 +41,21 @@ class EditFragment : Fragment() {
                 binding.editText.text.clear()
                 mainViewModel.wordChange()
             }
+        }
+
+        binding.recyclerView.apply {
+            setHasFixedSize(true)
+
+            adapter = EditRecyclerViewAdapter(
+                onClick = {
+                    viewModel.wordClicked(it.name)
+                },
+                onDeleteClick = {
+                    viewModel.deleteWord(it)
+                    mainViewModel.wordChange()
+                }
+            )
+            viewTreeObserver.addOnScrollChangedListener { setStackFromEnd(isScrollable()) }
         }
     }
 
