@@ -2,6 +2,7 @@ package com.taehee.data.repository
 
 import com.taehee.data.mapper.WordMapper
 import com.taehee.data.source.WordDataSource
+import com.taehee.domain.model.Game
 import com.taehee.domain.model.Word
 import com.taehee.domain.repository.WordRepository
 import kotlinx.coroutines.flow.map
@@ -14,8 +15,9 @@ class WordRepositoryImpl @Inject constructor(
     override fun getWords() =
         dataSource.getWords().map { WordMapper.toWords(it) }
 
-    override fun getGame() =
-        dataSource.getWords().map { WordMapper.toGames(it) }
+    override suspend fun getGame(): List<Game> {
+        return dataSource.getGames().let { WordMapper.toGames(it) }
+    }
 
     override suspend fun addWord(word: Word) = dataSource.addWord(WordMapper.toWordEntity(word))
 

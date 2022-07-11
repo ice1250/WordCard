@@ -3,12 +3,9 @@ package com.taehee.wordcard.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.taehee.domain.usecase.tts.StopTtsUseCase
 import com.taehee.wordcard.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,10 +24,14 @@ class MainViewModel @Inject constructor(
 
     init {
         _completeInit.value = false
-        viewModelScope.launch {
-            delay(2000)
-            _completeInit.value = true
-        }
+//        viewModelScope.launch {
+//            delay(2000)
+//            _completeInit.value = true
+//        }
+    }
+
+    fun initComplete() {
+        _completeInit.value = true
     }
 
     override fun onCleared() {

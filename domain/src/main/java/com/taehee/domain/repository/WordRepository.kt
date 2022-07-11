@@ -9,7 +9,7 @@ interface WordRepository {
 
     fun getWords(): Flow<List<Word>>
 
-    fun getGame(): Flow<List<Game>>
+    suspend fun getGame(): List<Game>
 
     suspend fun addWord(word: Word)
 

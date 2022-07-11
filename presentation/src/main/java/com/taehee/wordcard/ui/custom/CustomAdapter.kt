@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 
 abstract class CustomAdapter<T : Any, B : ViewDataBinding>(
     @LayoutRes private val layoutResId: Int,
-    ItemCallback: DiffUtil.ItemCallback<T>,
+    itemCallback: DiffUtil.ItemCallback<T>,
     inline val bind: (item: T, binding: B) -> Unit,
-) : ListAdapter<T, CustomAdapter.CustomViewHolder<B>>(ItemCallback) {
+) : ListAdapter<T, CustomAdapter.CustomViewHolder<B>>(itemCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder<B> =
         CustomViewHolder(layoutResId, parent)

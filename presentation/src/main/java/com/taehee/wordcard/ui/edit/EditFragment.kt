@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -22,6 +23,11 @@ class EditFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var binding: FragmentEditBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this) { requireActivity().finish() }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -34,7 +40,6 @@ class EditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-
         binding.button.setOnClickListener {
             if (binding.editText.text.isNotEmpty()) {
                 viewModel.addWord(binding.editText.text.toString())
@@ -42,15 +47,11 @@ class EditFragment : Fragment() {
                 mainViewModel.wordChange()
             }
         }
-
         binding.recyclerView.apply {
             setHasFixedSize(true)
-
             adapter = EditRecyclerViewAdapter(
-                onClick = {
-                    viewModel.wordClicked(it.name)
-                },
-                onDeleteClick = {
+                { viewModel.wordClicked(it.name) },
+                {
                     viewModel.deleteWord(it)
                     mainViewModel.wordChange()
                 }

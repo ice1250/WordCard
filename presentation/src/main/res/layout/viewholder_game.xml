@@ -9,6 +9,7 @@
         android:focusable="true">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:foreground="?android:attr/selectableItemBackground"

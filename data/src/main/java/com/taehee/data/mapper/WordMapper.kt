@@ -19,8 +19,14 @@ object WordMapper {
     }
 
     fun toGames(wordEntities: List<WordEntity>): List<Game> {
-        return wordEntities.map {
-            Game(it.name).apply { isSuccess = false }
+        val wordList: MutableList<WordEntity> = mutableListOf()
+        wordEntities.map {
+            wordList.add(it)
+            wordList.add(it)
+        }
+        wordList.shuffle()
+        return wordList.mapIndexed { index, wordEntity ->
+            Game(wordEntity.name, index)
         }
     }
 

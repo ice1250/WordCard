@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,6 +18,11 @@ class GameFragment : Fragment() {
     private val viewModel: GameViewModel by viewModels()
     private lateinit var binding: FragmentGameBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this) { requireActivity().finish() }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -29,9 +35,13 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-        binding.recyclerView.setHasFixedSize(true)
-        binding.recyclerView.adapter = GameRecyclerViewAdapter()
-        binding.recyclerView.addItemDecoration(GameItemDecoration(4, 10))
+        with(binding.recyclerView) {
+            setHasFixedSize(true)
+            adapter = GameRecyclerViewAdapter {
+                if (viewModel.completeLoading.value == true) viewModel.select(it)
+            }
+            addItemDecoration(GameItemDecoration(4, 10))
+        }
     }
 
 }

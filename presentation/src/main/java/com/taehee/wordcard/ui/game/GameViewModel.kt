@@ -1,16 +1,82 @@
 package com.taehee.wordcard.ui.game
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.taehee.domain.model.Game
+import com.taehee.domain.model.GameState
 import com.taehee.domain.usecase.word.GetGameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GameViewModel @Inject constructor(
-    getGameUseCase: GetGameUseCase,
+    private val getGameUseCase: GetGameUseCase,
 ) : ViewModel() {
-    val items: LiveData<List<Game>> = getGameUseCase().asLiveData()
+
+    val items: MutableLiveData<List<Game>> = MutableLiveData<List<Game>>().apply {
+        getGames()
+    }
+
+    private fun getGames() {
+        getGameUseCase(viewModelScope) {
+            items.value = it
+        }
+    }
+
+    private val _completeLoading = MutableLiveData<Boolean>()
+    val completeLoading: LiveData<Boolean> get() = _completeLoading
+
+    init {
+        _completeLoading.value = true
+    }
+
+    fun select(game: Game) {
+        if (game.state == GameState.NONE) {
+            _completeLoading.value = false
+            val tempList: MutableList<Game> = mutableListOf()
+            items.value?.map {
+                if (it.num == game.num) {
+                    val newItem = Game(it.name, it.num)
+                    newItem.state = GameState.FLIP
+                    tempList.add(newItem)
+                } else {
+                    tempList.add(it)
+                }
+            }
+            items.value = tempList
+
+            val flipList = tempList.filter {
+                it.state == GameState.FLIP
+            }
+
+            if (flipList.size == 2) {
+                val flipTempList: MutableList<Game> = mutableListOf()
+                items.value?.map {
+                    flipTempList.add(it)
+                }
+                val firstItem = Game(flipList[0].name, flipList[0].num)
+                val secondItem = Game(flipList[1].name, flipList[1].num)
+                if (flipList[0].name == flipList[1].name) {
+                    firstItem.state = GameState.SUCCESS
+                    secondItem.state = GameState.SUCCESS
+                } else {
+                    firstItem.state = GameState.NONE
+                    secondItem.state = GameState.NONE
+                }
+                flipTempList[firstItem.num] = firstItem
+                flipTempList[secondItem.num] = secondItem
+                viewModelScope.launch {
+                    delay(1000)
+                    items.value = flipTempList
+                    _completeLoading.value = true
+                }
+            } else {
+                _completeLoading.value = true
+            }
+        }
+    }
 }

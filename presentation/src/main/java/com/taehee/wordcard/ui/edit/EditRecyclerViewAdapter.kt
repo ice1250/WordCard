@@ -10,14 +10,12 @@ class EditRecyclerViewAdapter(
     onClick: (Word) -> Unit,
     onDeleteClick: (Word) -> Unit,
 ) : CustomAdapter<Word, ViewholderEditBinding>(
-    R.layout.viewholder_edit, DiffCallback.getWord(),
-    bind = { item, binding ->
-        binding.textView.text = item.name
-        binding.delete.setOnClickListener {
-            onDeleteClick(item)
-        }
-        binding.root.setOnClickListener {
-            onClick(item)
+    R.layout.viewholder_edit, DiffCallback.word(),
+    { item, binding ->
+        binding.apply {
+            textView.text = item.name
+            delete.setOnClickListener { onDeleteClick(item) }
+            root.setOnClickListener { onClick(item) }
         }
     }
 )
