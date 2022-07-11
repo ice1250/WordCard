@@ -1,6 +1,5 @@
 package com.taehee.wordcard.ui.custom
 
-import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import com.taehee.domain.model.Game
 import com.taehee.domain.model.Word

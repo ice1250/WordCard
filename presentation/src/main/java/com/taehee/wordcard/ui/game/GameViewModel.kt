@@ -21,17 +21,35 @@ class GameViewModel @Inject constructor(
         getGames()
     }
 
-    private fun getGames() {
+    fun getGames() {
         getGameUseCase(viewModelScope) {
             items.value = it
+            checkGameComplete()
         }
     }
 
     private val _completeLoading = MutableLiveData<Boolean>()
     val completeLoading: LiveData<Boolean> get() = _completeLoading
 
+    private val _gameComplete = MutableLiveData<Boolean>()
+    val gameComplete: LiveData<Boolean> = _gameComplete
+
     init {
         _completeLoading.value = true
+    }
+
+    private fun checkGameComplete() {
+        _gameComplete.value = false
+        viewModelScope.launch {
+            while (true) {
+                delay(1000)
+                val successList = items.value?.filter { it.state != GameState.SUCCESS }
+                if (successList.isNullOrEmpty()) {
+                    _gameComplete.value = true
+                    break
+                }
+            }
+        }
     }
 
     fun select(game: Game) {
@@ -63,16 +81,20 @@ class GameViewModel @Inject constructor(
                 if (flipList[0].name == flipList[1].name) {
                     firstItem.state = GameState.SUCCESS
                     secondItem.state = GameState.SUCCESS
+                    flipTempList[firstItem.num] = firstItem
+                    flipTempList[secondItem.num] = secondItem
+                    items.value = flipTempList
+                    _completeLoading.value = true
                 } else {
                     firstItem.state = GameState.NONE
                     secondItem.state = GameState.NONE
-                }
-                flipTempList[firstItem.num] = firstItem
-                flipTempList[secondItem.num] = secondItem
-                viewModelScope.launch {
-                    delay(1000)
-                    items.value = flipTempList
-                    _completeLoading.value = true
+                    flipTempList[firstItem.num] = firstItem
+                    flipTempList[secondItem.num] = secondItem
+                    viewModelScope.launch {
+                        delay(1000)
+                        items.value = flipTempList
+                        _completeLoading.value = true
+                    }
                 }
             } else {
                 _completeLoading.value = true

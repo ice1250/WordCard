@@ -42,6 +42,19 @@ class GameFragment : Fragment() {
             }
             addItemDecoration(GameItemDecoration(4, 10))
         }
+
+        viewModel.gameComplete.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.restartButton.visibility = View.VISIBLE
+            } else {
+                binding.restartButton.visibility = View.GONE
+            }
+        }
+
+        binding.restartButton.setOnClickListener {
+            binding.restartButton.visibility = View.GONE
+            viewModel.getGames()
+        }
     }
 
 }

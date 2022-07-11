@@ -56,6 +56,7 @@ class EditFragment : Fragment() {
                     mainViewModel.wordChange()
                 }
             )
+            addItemDecoration(EditItemDecoration(4))
             viewTreeObserver.addOnScrollChangedListener { setStackFromEnd(isScrollable()) }
         }
     }
