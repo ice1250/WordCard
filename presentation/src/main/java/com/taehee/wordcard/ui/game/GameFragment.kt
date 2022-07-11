@@ -53,7 +53,7 @@ class GameFragment : Fragment() {
 
         binding.restartButton.setOnClickListener {
             binding.restartButton.visibility = View.GONE
-            viewModel.getGames()
+            viewModel.loadGames()
         }
     }
 

@@ -9,6 +9,7 @@ import com.taehee.domain.model.GameState
 import com.taehee.domain.usecase.word.GetGameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,14 +19,11 @@ class GameViewModel @Inject constructor(
 ) : ViewModel() {
 
     val items: MutableLiveData<List<Game>> = MutableLiveData<List<Game>>().apply {
-        getGames()
+        loadGames()
     }
 
-    fun getGames() {
-        getGameUseCase(viewModelScope) {
-            items.value = it
-            checkGameComplete()
-        }
+    fun loadGames() {
+        getGameUseCase(viewModelScope) { items.value = it }
     }
 
     private val _completeLoading = MutableLiveData<Boolean>()
@@ -36,18 +34,17 @@ class GameViewModel @Inject constructor(
 
     init {
         _completeLoading.value = true
-    }
-
-    private fun checkGameComplete() {
-        _gameComplete.value = false
         viewModelScope.launch {
-            while (true) {
-                delay(1000)
-                val successList = items.value?.filter { it.state != GameState.SUCCESS }
-                if (successList.isNullOrEmpty()) {
-                    _gameComplete.value = true
-                    break
+            flow {
+                while (true) {
+                    delay(1000)
+                    emit(items.value!!.isNotEmpty() &&
+                            (items.value!!.size == items.value!!.filter {
+                                it.state == GameState.SUCCESS
+                            }.size))
                 }
+            }.collect {
+                _gameComplete.value = it
             }
         }
     }
@@ -55,48 +52,26 @@ class GameViewModel @Inject constructor(
     fun select(game: Game) {
         if (game.state == GameState.NONE) {
             _completeLoading.value = false
-            val tempList: MutableList<Game> = mutableListOf()
-            items.value?.map {
-                if (it.num == game.num) {
-                    val newItem = Game(it.name, it.num)
-                    newItem.state = GameState.FLIP
-                    tempList.add(newItem)
-                } else {
-                    tempList.add(it)
-                }
-            }
-            items.value = tempList
 
-            val flipList = tempList.filter {
-                it.state == GameState.FLIP
+            items.value!!.update(Game(game.name, game.num, GameState.FLIP)).also {
+                items.value = it
             }
 
-            if (flipList.size == 2) {
-                val flipTempList: MutableList<Game> = mutableListOf()
-                items.value?.map {
-                    flipTempList.add(it)
-                }
-                val firstItem = Game(flipList[0].name, flipList[0].num)
-                val secondItem = Game(flipList[1].name, flipList[1].num)
-                if (flipList[0].name == flipList[1].name) {
-                    firstItem.state = GameState.SUCCESS
-                    secondItem.state = GameState.SUCCESS
-                    flipTempList[firstItem.num] = firstItem
-                    flipTempList[secondItem.num] = secondItem
-                    items.value = flipTempList
-                    _completeLoading.value = true
-                } else {
-                    firstItem.state = GameState.NONE
-                    secondItem.state = GameState.NONE
-                    flipTempList[firstItem.num] = firstItem
-                    flipTempList[secondItem.num] = secondItem
-                    viewModelScope.launch {
+            val flipList = items.value!!.flipList()
+            viewModelScope.launch {
+                if (flipList.size == 2) {
+                    val state = if (flipList.isSame()) {
+                        GameState.SUCCESS
+                    } else {
                         delay(1000)
-                        items.value = flipTempList
-                        _completeLoading.value = true
+                        GameState.NONE
+                    }
+                    flipList.map {
+                        items.value!!.update(Game(it.name, it.num, state)).also { update ->
+                            items.value = update
+                        }
                     }
                 }
-            } else {
                 _completeLoading.value = true
             }
         }
