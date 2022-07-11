@@ -10,7 +10,7 @@ interface WordDao {
     @Query("SELECT * FROM word")
     fun getWords(): Flow<List<WordEntity>>
 
-    @Query("SELECT * FROM word")
+    @Query("SELECT * FROM word ORDER BY RANDOM() LIMIT 14")
     fun getGames(): List<WordEntity>
 
     @Query("SELECT * FROM word WHERE (name!=:name) OR :name IS NULL ORDER BY RANDOM() LIMIT 1")
