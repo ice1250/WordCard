@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -23,11 +26,23 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bottomView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:spanCount="4" />
+
+        <TextView
+            android:id="@+id/bottomView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:gravity="center_vertical"
+            android:padding="14dp"
+            android:text="@{String.valueOf(viewModel.score)}"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="100" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,11 +60,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="재시작"
-            android:visibility="gone"
+            android:visibility="@{viewModel.gameComplete? View.VISIBLE:View.GONE, default=gone}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent=".3" />
+
+        <nl.dionsegijn.konfetti.xml.KonfettiView
+            android:id="@+id/particle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="10dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

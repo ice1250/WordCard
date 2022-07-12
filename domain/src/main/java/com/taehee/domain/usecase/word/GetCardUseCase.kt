@@ -9,11 +9,14 @@ class GetCardUseCase(private val repository: WordRepository) {
     operator fun invoke(
         text: String? = null,
         scope: CoroutineScope,
+        isNeedDelay: Boolean = true,
         onResult: (Card?) -> Unit = {},
     ) {
         scope.launch(Dispatchers.Main) {
             onResult(withContext(Dispatchers.IO) {
-                delay(1000)
+                if (isNeedDelay) {
+                    delay(1000)
+                }
                 repository.getCard(text)
             })
         }

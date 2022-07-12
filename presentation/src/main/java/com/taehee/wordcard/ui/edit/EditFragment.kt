@@ -11,10 +11,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.taehee.wordcard.R
 import com.taehee.wordcard.databinding.FragmentEditBinding
-import com.taehee.wordcard.ui.custom.isScrollable
-import com.taehee.wordcard.ui.custom.setStackFromEnd
 import com.taehee.wordcard.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import gun0912.tedkeyboardobserver.TedKeyboardObserver
 
 @AndroidEntryPoint
 class EditFragment : Fragment() {
@@ -45,6 +44,10 @@ class EditFragment : Fragment() {
                 viewModel.addWord(binding.editText.text.toString())
                 binding.editText.text.clear()
                 mainViewModel.wordChange()
+                binding.recyclerView.postDelayed({
+                    binding.recyclerView.smoothScrollToPosition(binding.recyclerView.adapter!!.itemCount)
+                }, 100)
+
             }
         }
         binding.recyclerView.apply {
@@ -57,7 +60,11 @@ class EditFragment : Fragment() {
                 }
             )
             addItemDecoration(EditItemDecoration(4))
-            viewTreeObserver.addOnScrollChangedListener { setStackFromEnd(isScrollable()) }
+            TedKeyboardObserver(requireActivity()).listen {
+                if (it) {
+                    smoothScrollToPosition(adapter!!.itemCount - 1)
+                }
+            }
         }
     }
 

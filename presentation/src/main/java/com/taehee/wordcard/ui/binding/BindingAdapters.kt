@@ -10,7 +10,6 @@ import com.taehee.wordcard.ui.game.GameRecyclerViewAdapter
 @BindingAdapter("items")
 fun RecyclerView.items(items: List<Word>?) {
     (adapter as? EditRecyclerViewAdapter)?.submitList(items)
-    smoothScrollToPosition(adapter!!.itemCount)
 }
 
 @BindingAdapter("gameItems")

@@ -27,9 +27,9 @@ class CardViewModel @Inject constructor(
         speakTtsUseCase(text)
     }
 
-    fun getCard(text: String? = null) {
+    fun getCard(text: String? = null, isNeedDelay: Boolean = true) {
         _completeLoading.value = false
-        getCardUseCase(text, viewModelScope) {
+        getCardUseCase(text, viewModelScope, isNeedDelay) {
             card.value = it
             _completeLoading.value = true
         }

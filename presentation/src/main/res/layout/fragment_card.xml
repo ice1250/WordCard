@@ -53,7 +53,7 @@
                 tools:text="가" />
         </androidx.cardview.widget.CardView>
 
-        <nl.dionsegijn.konfetti.KonfettiView
+        <nl.dionsegijn.konfetti.xml.KonfettiView
             android:id="@+id/particle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

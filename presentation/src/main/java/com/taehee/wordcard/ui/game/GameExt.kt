@@ -1,10 +1,9 @@
 package com.taehee.wordcard.ui.game
 
 import com.taehee.domain.model.Game
-import com.taehee.domain.model.GameState
 
 fun List<Game>.flipList(): List<Game> {
-    return filter { it.state == GameState.FLIP }
+    return filter { it.state == Game.GameState.FLIP }
 }
 
 fun List<Game>.isSame(): Boolean {

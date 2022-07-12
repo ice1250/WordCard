@@ -1,7 +1,6 @@
 package com.taehee.wordcard.ui.card
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -19,8 +18,11 @@ import com.taehee.wordcard.databinding.FragmentCardBinding
 import com.taehee.wordcard.ui.main.MainViewModel
 import com.taehee.wordcard.util.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
-import nl.dionsegijn.konfetti.models.Shape
-import nl.dionsegijn.konfetti.models.Size
+import nl.dionsegijn.konfetti.core.Party
+import nl.dionsegijn.konfetti.core.Position
+import nl.dionsegijn.konfetti.core.emitter.Emitter
+import nl.dionsegijn.konfetti.core.models.Size
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class CardFragment : Fragment() {
@@ -55,11 +57,11 @@ class CardFragment : Fragment() {
         binding.cardView.setOnClickListener {
             if (cardViewModel.completeLoading.value == true) {
                 cardViewModel.speak(binding.wordText.text.toString())
-                mainViewModel.wordChange()
+                cardViewModel.getCard(binding.wordText.text.toString(), true)
             }
         }
         mainViewModel.wordChanged.observe(viewLifecycleOwner, EventObserver {
-            cardViewModel.getCard(binding.wordText.text.toString())
+            cardViewModel.getCard(binding.wordText.text.toString(), false)
         })
         cardViewModel.card.observe(viewLifecycleOwner, object : Observer<Card> {
             override fun onChanged(t: Card?) {
@@ -71,16 +73,12 @@ class CardFragment : Fragment() {
 
     private fun onTouchView(motionEvent: MotionEvent): Boolean {
         if (motionEvent.action == MotionEvent.ACTION_DOWN || motionEvent.action == MotionEvent.ACTION_MOVE) {
-            binding.particle.build()
-                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
-                .setDirection(0.0, 359.0)
-                .setSpeed(1f, 5f)
-                .setFadeOutEnabled(true)
-                .setTimeToLive(100L)
-                .addShapes(Shape.Square, Shape.Circle)
-                .addSizes(Size(12))
-                .setPosition(motionEvent.rawX, motionEvent.rawY)
-                .streamFor(12, 300L)
+            binding.particle.start(Party(
+                angle = 10,
+                size = listOf(Size.LARGE),
+                position = Position.Absolute(motionEvent.rawX, motionEvent.rawY),
+                emitter = Emitter(300, TimeUnit.MILLISECONDS).perSecond(100)
+            ))
         }
         return false
     }

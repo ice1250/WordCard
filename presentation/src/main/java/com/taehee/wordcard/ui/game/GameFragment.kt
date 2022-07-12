@@ -7,14 +7,24 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.taehee.wordcard.R
 import com.taehee.wordcard.databinding.FragmentGameBinding
+import com.taehee.wordcard.ui.main.MainViewModel
+import com.taehee.wordcard.util.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
+import nl.dionsegijn.konfetti.core.Angle
+import nl.dionsegijn.konfetti.core.Party
+import nl.dionsegijn.konfetti.core.Position
+import nl.dionsegijn.konfetti.core.Spread
+import nl.dionsegijn.konfetti.core.emitter.Emitter
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class GameFragment : Fragment() {
 
+    private val mainViewModel: MainViewModel by activityViewModels()
     private val viewModel: GameViewModel by viewModels()
     private lateinit var binding: FragmentGameBinding
 
@@ -43,18 +53,37 @@ class GameFragment : Fragment() {
             addItemDecoration(GameItemDecoration(4, 10))
         }
 
-        viewModel.gameComplete.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.restartButton.visibility = View.VISIBLE
-            } else {
-                binding.restartButton.visibility = View.GONE
-            }
-        }
-
         binding.restartButton.setOnClickListener {
             binding.restartButton.visibility = View.GONE
             viewModel.loadGames()
         }
+
+        mainViewModel.wordChanged.observe(viewLifecycleOwner,
+            EventObserver { viewModel.loadGames() })
+
+        viewModel.gameComplete.observe(viewLifecycleOwner) { if (it) binding.particle.start(parade()) }
     }
+
+    private fun parade(): List<Party> {
+        val party = Party(
+            speed = 10f,
+            maxSpeed = 30f,
+            damping = 0.9f,
+            angle = Angle.RIGHT - 45,
+            spread = Spread.SMALL,
+            colors = listOf(0xfce18a, 0xff726d, 0xf4306d, 0xb48def),
+            emitter = Emitter(duration = 5, TimeUnit.SECONDS).perSecond(100),
+            position = Position.Relative(0.0, 0.5)
+        )
+
+        return listOf(
+            party,
+            party.copy(
+                angle = party.angle - 90, // flip angle from right to left
+                position = Position.Relative(1.0, 0.5)
+            ),
+        )
+    }
+
 
 }

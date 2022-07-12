@@ -4,7 +4,6 @@ import android.graphics.Color
 import com.taehee.data.model.WordEntity
 import com.taehee.domain.model.Card
 import com.taehee.domain.model.Game
-import com.taehee.domain.model.GameState
 import com.taehee.domain.model.Word
 import java.security.SecureRandom
 
@@ -27,7 +26,7 @@ object WordMapper {
         }
         wordList.shuffle()
         return wordList.mapIndexed { index, wordEntity ->
-            Game(wordEntity.name, index, GameState.NONE)
+            Game(wordEntity.name, index, Game.GameState.NONE)
         }
     }
 

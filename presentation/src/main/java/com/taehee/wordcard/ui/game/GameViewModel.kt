@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.taehee.domain.model.Game
-import com.taehee.domain.model.GameState
 import com.taehee.domain.usecase.word.GetGameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -18,12 +17,15 @@ class GameViewModel @Inject constructor(
     private val getGameUseCase: GetGameUseCase,
 ) : ViewModel() {
 
+    val score = MutableLiveData(0)
+
     val items: MutableLiveData<List<Game>> = MutableLiveData<List<Game>>().apply {
         loadGames()
     }
 
     fun loadGames() {
         getGameUseCase(viewModelScope) { items.value = it }
+        score.value = 0
     }
 
     private val _completeLoading = MutableLiveData<Boolean>()
@@ -34,15 +36,15 @@ class GameViewModel @Inject constructor(
 
     init {
         _completeLoading.value = true
+    }
+
+    private fun checkComplete(){
         viewModelScope.launch {
             flow {
-                while (true) {
-                    delay(1000)
-                    emit(items.value!!.isNotEmpty() &&
-                            (items.value!!.size == items.value!!.filter {
-                                it.state == GameState.SUCCESS
-                            }.size))
-                }
+                emit(items.value!!.isNotEmpty() &&
+                        (items.value!!.size == items.value!!.filter {
+                            it.state == Game.GameState.SUCCESS
+                        }.size))
             }.collect {
                 _gameComplete.value = it
             }
@@ -50,10 +52,10 @@ class GameViewModel @Inject constructor(
     }
 
     fun select(game: Game) {
-        if (game.state == GameState.NONE) {
+        if (game.state == Game.GameState.NONE) {
             _completeLoading.value = false
 
-            items.value!!.update(Game(game.name, game.num, GameState.FLIP)).also {
+            items.value!!.update(Game(game.name, game.num, Game.GameState.FLIP)).also {
                 items.value = it
             }
 
@@ -61,19 +63,23 @@ class GameViewModel @Inject constructor(
             viewModelScope.launch {
                 if (flipList.size == 2) {
                     val state = if (flipList.isSame()) {
-                        GameState.SUCCESS
+                        score.value = score.value?.plus(10)
+                        Game.GameState.SUCCESS
                     } else {
                         delay(1000)
-                        GameState.NONE
+                        score.value = score.value?.minus(10)
+                        Game.GameState.NONE
                     }
                     flipList.map {
                         items.value!!.update(Game(it.name, it.num, state)).also { update ->
                             items.value = update
                         }
                     }
+                    checkComplete()
                 }
                 _completeLoading.value = true
             }
         }
+
     }
 }
