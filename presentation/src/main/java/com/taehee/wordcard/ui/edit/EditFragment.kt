@@ -40,9 +40,9 @@ class EditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.button.setOnClickListener {
-            if (binding.editText.text.isNotEmpty()) {
+            if (binding.editText.text!!.isNotEmpty()) {
                 viewModel.addWord(binding.editText.text.toString())
-                binding.editText.text.clear()
+                binding.editText.text!!.clear()
                 mainViewModel.wordChange()
                 binding.recyclerView.postDelayed({
                     binding.recyclerView.smoothScrollToPosition(binding.recyclerView.adapter!!.itemCount)

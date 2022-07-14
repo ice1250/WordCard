@@ -1,7 +1,9 @@
 package com.taehee.wordcard.di
 
+import com.taehee.data.repository.GithubRepositoryImpl
 import com.taehee.data.repository.WordRepositoryImpl
 import com.taehee.device.repository.TtsRepositoryImpl
+import com.taehee.domain.repository.GithubRepository
 import com.taehee.domain.repository.TtsRepository
 import com.taehee.domain.repository.WordRepository
 import dagger.Binds
@@ -21,4 +23,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindTtsRepository(repository: TtsRepositoryImpl): TtsRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindGithubRepository(repository: GithubRepositoryImpl): GithubRepository
 }

@@ -2,6 +2,7 @@ package com.taehee.wordcard.ui.custom
 
 import androidx.recyclerview.widget.DiffUtil
 import com.taehee.domain.model.Game
+import com.taehee.domain.model.GithubRepo
 import com.taehee.domain.model.Word
 
 class DiffCallback {
@@ -31,5 +32,18 @@ class DiffCallback {
                 }
             }
         }
+
+        fun info(): DiffUtil.ItemCallback<GithubRepo> {
+            return object : DiffUtil.ItemCallback<GithubRepo>() {
+                override fun areItemsTheSame(oldItem: GithubRepo, newItem: GithubRepo): Boolean {
+                    return oldItem.name == newItem.name && oldItem.url == newItem.url
+                }
+
+                override fun areContentsTheSame(oldItem: GithubRepo, newItem: GithubRepo): Boolean {
+                    return oldItem.equals(newItem)
+                }
+            }
+        }
+
     }
 }

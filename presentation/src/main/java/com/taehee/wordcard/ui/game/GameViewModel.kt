@@ -1,5 +1,6 @@
 package com.taehee.wordcard.ui.game
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,10 +21,12 @@ class GameViewModel @Inject constructor(
     val score = MutableLiveData(0)
 
     val items: MutableLiveData<List<Game>> = MutableLiveData<List<Game>>().apply {
-        loadGames()
+        getGameUseCase(viewModelScope) { value = it }
     }
 
-    fun loadGames() {
+    fun reGame() {
+        Log.i("taehee", "reGame")
+        _gameComplete.value = false
         getGameUseCase(viewModelScope) { items.value = it }
         score.value = 0
     }
@@ -36,9 +39,10 @@ class GameViewModel @Inject constructor(
 
     init {
         _completeLoading.value = true
+        _gameComplete.value = false
     }
 
-    private fun checkComplete(){
+    private fun checkComplete() {
         viewModelScope.launch {
             flow {
                 emit(items.value!!.isNotEmpty() &&

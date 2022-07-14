@@ -13,4 +13,8 @@
         android:id="@+id/editFragment"
         android:icon="@drawable/ic_edit_black_24"
         android:title="@string/edit" />
+    <item
+        android:id="@+id/infoFragment"
+        android:icon="@drawable/ic_info_black_24"
+        android:title="@string/info" />
 </menu>

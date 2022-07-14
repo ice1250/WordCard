@@ -1,5 +1,7 @@
 package com.taehee.wordcard.di
 
+import com.taehee.data.source.GithubRemoteSource
+import com.taehee.data.source.GithubRemoteSourceImpl
 import com.taehee.data.source.WordDataSource
 import com.taehee.data.source.WordDataSourceImpl
 import com.taehee.device.source.TtsSource
@@ -21,4 +23,8 @@ abstract class DataSourceModule {
     @Singleton
     @Binds
     abstract fun bindTtsDataSource(source: TtsSourceImpl): TtsSource
+
+    @Singleton
+    @Binds
+    abstract fun bindGithubRemoteSource(source: GithubRemoteSourceImpl): GithubRemoteSource
 }

@@ -55,11 +55,11 @@ class GameFragment : Fragment() {
 
         binding.restartButton.setOnClickListener {
             binding.restartButton.visibility = View.GONE
-            viewModel.loadGames()
+            viewModel.reGame()
         }
 
         mainViewModel.wordChanged.observe(viewLifecycleOwner,
-            EventObserver { viewModel.loadGames() })
+            EventObserver { viewModel.reGame() })
 
         viewModel.gameComplete.observe(viewLifecycleOwner) { if (it) binding.particle.start(parade()) }
     }

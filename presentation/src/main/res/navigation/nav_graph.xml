@@ -19,4 +19,9 @@
         android:name="com.taehee.wordcard.ui.game.GameFragment"
         android:label="fragment_game"
         tools:layout="@layout/fragment_game" />
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.taehee.wordcard.ui.info.InfoFragment"
+        android:label="fragment_info"
+        tools:layout="@layout/fragment_info" />
 </navigation>

@@ -11,17 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:focusable="true"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp">
+        android:focusable="true">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_margin="8dp"
+            app:cardBackgroundColor="@android:color/transparent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,7 +28,7 @@
                 android:textSize="28sp"
                 tools:text="류태희" />
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,7 +36,7 @@
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/ic_delete_black_24" />
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

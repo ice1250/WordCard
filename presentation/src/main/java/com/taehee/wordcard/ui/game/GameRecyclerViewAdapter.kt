@@ -2,6 +2,7 @@ package com.taehee.wordcard.ui.game
 
 import android.graphics.Color
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.taehee.domain.model.Game
 import com.taehee.wordcard.R
 import com.taehee.wordcard.databinding.ViewholderGameBinding
@@ -24,9 +25,11 @@ class GameRecyclerViewAdapter(
             onClick(item)
         }
         if (item.state == Game.GameState.SUCCESS) {
-            binding.cardView.setCardBackgroundColor(Color.YELLOW)
+            binding.cardView.setCardBackgroundColor(ContextCompat.getColor(binding.cardView.context,
+                R.color.shrine_pink_100))
         } else {
-            binding.cardView.setCardBackgroundColor(Color.WHITE)
+            binding.cardView.setCardBackgroundColor(ContextCompat.getColor(binding.cardView.context,
+                R.color.shrine_pink_light))
         }
     }
 )

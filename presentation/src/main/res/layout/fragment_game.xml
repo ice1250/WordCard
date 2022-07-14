@@ -16,12 +16,11 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffc0cb"
         android:fitsSystemWindows="true">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            gameItems="@{viewModel.items}"
+            items="@{viewModel.items}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
@@ -32,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:spanCount="4" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/bottomView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +43,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             tools:text="100" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="카드를 등록 해 주세요"
@@ -55,8 +54,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/restartButton"
+            style="@style/Widget.Shrine.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="재시작"

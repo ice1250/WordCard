@@ -10,11 +10,10 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffc0cb"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
@@ -32,15 +31,16 @@
             android:layout_height="50dp"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/button"
+                style="@style/Widget.Shrine.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="add"
+                android:text="추가"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/button"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 </layout>
