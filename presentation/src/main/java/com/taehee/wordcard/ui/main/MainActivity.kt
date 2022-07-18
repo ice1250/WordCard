@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        hideSystemUI()
+//        hideSystemUI()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -31,6 +31,18 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_container) as NavHostFragment
         val navController = navHostFragment.navController
         binding.navView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (arrayOf(R.id.gameFragment,
+                    R.id.cardFragment,
+                    R.id.editFragment,
+                    R.id.infoFragment).contains(destination.id)
+            ) {
+                binding.navView.visibility = View.VISIBLE
+            } else {
+                binding.navView.visibility = View.GONE
+            }
+        }
 
         initSplash()
     }

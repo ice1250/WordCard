@@ -16,10 +16,11 @@ data class GithubRepoRes(
     @SerializedName("html_url")
     private val _id: String,
 
-) : GithubRepo {
+    ) : GithubRepo {
     override val name: String
         get() = _name
     override val url: String
         get() = _url
-
+    override val html_url: String
+        get() = _id
 }

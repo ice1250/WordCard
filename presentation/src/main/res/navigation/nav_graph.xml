@@ -23,5 +23,17 @@
         android:id="@+id/infoFragment"
         android:name="com.taehee.wordcard.ui.info.InfoFragment"
         android:label="fragment_info"
-        tools:layout="@layout/fragment_info" />
+        tools:layout="@layout/fragment_info" >
+        <action
+            android:id="@+id/action_infoFragment_to_infoDetailFragment"
+            app:destination="@id/infoDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoDetailFragment"
+        android:name="com.taehee.wordcard.ui.info.detail.InfoDetailFragment"
+        android:label="InfoDetailFragment" >
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
 </navigation>

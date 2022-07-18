@@ -15,7 +15,7 @@ class EditRecyclerViewAdapter(
         binding.apply {
             textView.text = item.name
             delete.setOnClickListener { onDeleteClick(item) }
-            root.setOnClickListener { onClick(item) }
+            cardView.setOnClickListener { onClick(item) }
         }
     }
 )

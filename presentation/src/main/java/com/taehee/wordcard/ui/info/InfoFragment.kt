@@ -8,6 +8,7 @@ import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.taehee.wordcard.R
 import com.taehee.wordcard.databinding.FragmentInfoBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +39,10 @@ class InfoFragment : Fragment() {
         binding.viewModel = viewModel
         with(binding.recyclerView) {
             setHasFixedSize(true)
-            adapter = InfoRecyclerViewAdapter()
+            adapter = InfoRecyclerViewAdapter() {
+                val action = InfoFragmentDirections.actionInfoFragmentToInfoDetailFragment(it.html_url)
+                findNavController().navigate(action)
+            }
             addItemDecoration(InfoItemDecoration(4))
         }
         viewModel.getGithubRepositories("ice1250")

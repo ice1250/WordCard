@@ -6,10 +6,13 @@ import com.taehee.wordcard.databinding.ViewholderInfoBinding
 import com.taehee.wordcard.ui.custom.CustomAdapter
 import com.taehee.wordcard.ui.custom.DiffCallback
 
-class InfoRecyclerViewAdapter : CustomAdapter<GithubRepo, ViewholderInfoBinding>(
+class InfoRecyclerViewAdapter(
+    onClick: (GithubRepo) -> Unit,
+) : CustomAdapter<GithubRepo, ViewholderInfoBinding>(
     R.layout.viewholder_info,
     DiffCallback.info(),
     bind = { item, binding ->
-        binding.textView.text = item.url
+        binding.textView.text = item.name
+        binding.cardView.setOnClickListener { onClick(item) }
     }
 )
