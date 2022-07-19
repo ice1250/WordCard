@@ -11,13 +11,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import com.taehee.domain.model.Card
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.taehee.wordcard.R
 import com.taehee.wordcard.databinding.FragmentCardBinding
 import com.taehee.wordcard.ui.main.MainViewModel
-import com.taehee.wordcard.util.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.Position
 import nl.dionsegijn.konfetti.core.emitter.Emitter
@@ -29,8 +30,8 @@ class CardFragment : Fragment() {
 
     private lateinit var binding: FragmentCardBinding
 
-    private val mainViewModel: MainViewModel by activityViewModels()
-    private val cardViewModel: CardViewModel by viewModels()
+    private val sharedViewModel: MainViewModel by activityViewModels()
+    private val viewModel: CardViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,25 +51,32 @@ class CardFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewModel = cardViewModel
+        binding.viewModel = viewModel
 
         binding.root.setOnTouchListener { _, motionEvent -> onTouchView(motionEvent) }
         binding.cardView.setOnTouchListener { _, motionEvent -> onTouchView(motionEvent) }
         binding.cardView.setOnClickListener {
-            if (cardViewModel.completeLoading.value == true) {
-                cardViewModel.speak(binding.wordText.text.toString())
-                cardViewModel.getCard(binding.wordText.text.toString(), true)
+            sharedViewModel.speak(binding.wordText.text.toString())
+            viewModel.fetchCard(binding.wordText.text.toString(), true)
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                sharedViewModel.uiState.collect {
+                    if (it.needRefreshCard) {
+                        viewModel.fetchCard(isNeedDelay = false)
+                        sharedViewModel.cardRefreshFinished()
+                    }
+                }
             }
         }
-        mainViewModel.wordChanged.observe(viewLifecycleOwner, EventObserver {
-            cardViewModel.getCard(binding.wordText.text.toString(), false)
-        })
-        cardViewModel.card.observe(viewLifecycleOwner, object : Observer<Card> {
-            override fun onChanged(t: Card?) {
-                mainViewModel.initComplete()
-                cardViewModel.card.removeObserver(this)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect {
+                    binding.cardView.isClickable = !it.isFetchingCard
+                }
             }
-        })
+        }
     }
 
     private fun onTouchView(motionEvent: MotionEvent): Boolean {

@@ -9,22 +9,26 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.taehee.wordcard.R
 import com.taehee.wordcard.databinding.FragmentGameBinding
 import com.taehee.wordcard.ui.main.MainViewModel
-import com.taehee.wordcard.util.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import nl.dionsegijn.konfetti.core.Angle
 import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.Position
 import nl.dionsegijn.konfetti.core.Spread
 import nl.dionsegijn.konfetti.core.emitter.Emitter
+import nl.dionsegijn.konfetti.core.models.Size
 import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class GameFragment : Fragment() {
 
-    private val mainViewModel: MainViewModel by activityViewModels()
+    private val sharedViewModel: MainViewModel by activityViewModels()
     private val viewModel: GameViewModel by viewModels()
     private lateinit var binding: FragmentGameBinding
 
@@ -47,9 +51,18 @@ class GameFragment : Fragment() {
         binding.viewModel = viewModel
         with(binding.recyclerView) {
             setHasFixedSize(true)
-            adapter = GameRecyclerViewAdapter {
-                if (viewModel.completeLoading.value == true) viewModel.select(it)
-            }
+            adapter = GameRecyclerViewAdapter(onClick = { game, view ->
+                viewModel.select(game)
+                val location = IntArray(2)
+                view.getLocationOnScreen(location)
+
+                binding.particle.start(Party(
+                    size = listOf(Size.MEDIUM),
+                    position = Position.Absolute(location[0].toFloat() + view.width / 2,
+                        location[1].toFloat()),
+                    emitter = Emitter(100, TimeUnit.MILLISECONDS).perSecond(200)
+                ))
+            })
             addItemDecoration(GameItemDecoration(4, 10))
         }
 
@@ -58,10 +71,25 @@ class GameFragment : Fragment() {
             viewModel.reGame()
         }
 
-        mainViewModel.wordChanged.observe(viewLifecycleOwner,
-            EventObserver { viewModel.reGame() })
-
-        viewModel.gameComplete.observe(viewLifecycleOwner) { if (it) binding.particle.start(parade()) }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                sharedViewModel.uiState.collect {
+                    if (it.needRefreshCard) {
+                        viewModel.reGame()
+                        sharedViewModel.gameRefreshFinished()
+                    }
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect {
+                    if (it.isGameWin) {
+                        binding.particle.start(parade())
+                    }
+                }
+            }
+        }
     }
 
     private fun parade(): List<Party> {
@@ -72,7 +100,7 @@ class GameFragment : Fragment() {
             angle = Angle.RIGHT - 45,
             spread = Spread.SMALL,
             colors = listOf(0xfce18a, 0xff726d, 0xf4306d, 0xb48def),
-            emitter = Emitter(duration = 5, TimeUnit.SECONDS).perSecond(100),
+            emitter = Emitter(duration = 1, TimeUnit.SECONDS).perSecond(100),
             position = Position.Relative(0.0, 0.5)
         )
 

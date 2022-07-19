@@ -1,6 +1,5 @@
 package com.taehee.wordcard.ui.game
 
-import android.graphics.Color
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.taehee.domain.model.Game
@@ -10,7 +9,7 @@ import com.taehee.wordcard.ui.custom.CustomAdapter
 import com.taehee.wordcard.ui.custom.DiffCallback
 
 class GameRecyclerViewAdapter(
-    onClick: (Game) -> Unit,
+    onClick: (Game, View) -> Unit,
 ) : CustomAdapter<Game, ViewholderGameBinding>(
     R.layout.viewholder_game, DiffCallback.game(),
     bind = { item, binding ->
@@ -21,8 +20,8 @@ class GameRecyclerViewAdapter(
         }
         binding.textView.text = item.name
 
-        binding.root.setOnClickListener {
-            onClick(item)
+        binding.cardView.setOnClickListener {
+            onClick(item, it)
         }
         if (item.state == Game.GameState.SUCCESS) {
             binding.cardView.setCardBackgroundColor(ContextCompat.getColor(binding.cardView.context,

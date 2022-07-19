@@ -21,4 +21,10 @@ class GetCardUseCase(private val repository: WordRepository) {
             })
         }
     }
+
+    suspend operator fun invoke(
+        text: String? = null,
+    ): Card? {
+        return repository.getCard(text)
+    }
 }

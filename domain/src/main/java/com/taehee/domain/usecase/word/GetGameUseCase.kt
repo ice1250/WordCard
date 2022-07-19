@@ -19,4 +19,9 @@ class GetGameUseCase(private val repository: WordRepository) {
             })
         }
     }
+
+    suspend operator fun invoke(
+    ): List<Game> {
+        return repository.getGame()
+    }
 }

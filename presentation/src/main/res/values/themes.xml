@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <style name="Theme.WordCard" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -80,5 +80,9 @@
 
     <style name="Widget.Shrine.Backdrop" parent="">
         <item name="android:background">?attr/colorAccent</item>
+    </style>
+
+    <style name="progressbar_color">
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 </resources>

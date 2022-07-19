@@ -28,7 +28,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="8dp"
-            android:visibility="@{viewModel.card == null ? View.GONE: View.VISIBLE, default=visible }"
+            android:visibility="@{viewModel.uiState.card == null ? View.GONE: View.VISIBLE, default=visible }"
             app:cardBackgroundColor="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +45,7 @@
                 android:autoSizeTextType="uniform"
                 android:gravity="center"
                 android:lines="1"
-                android:text="@{viewModel.card.name}"
+                android:text="@{viewModel.uiState.card.name}"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
                 android:textColor="?android:attr/textColorPrimary"
                 tools:text="가" />
@@ -54,15 +54,26 @@
         <nl.dionsegijn.konfetti.xml.KonfettiView
             android:id="@+id/particle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="10dp" />
+            android:layout_height="match_parent" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/errorMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="카드를 등록 해 주세요"
+            android:text="@{viewModel.uiState.errorMessage}"
             android:textSize="30sp"
-            android:visibility="@{viewModel.card == null ? View.VISIBLE: View.GONE, default=gone }"
+            android:visibility="@{viewModel.uiState.errorMessage.empty ? View.GONE: View.VISIBLE, default=gone }"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/progressbar_color"
+            android:visibility="@{viewModel.uiState.fetchingCard ? View.VISIBLE : View.GONE, default=visible}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

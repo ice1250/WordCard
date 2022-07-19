@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.taehee.domain.model.Word
-import com.taehee.domain.usecase.tts.SpeakTtsUseCase
 import com.taehee.domain.usecase.word.AddWordUseCase
 import com.taehee.domain.usecase.word.GetWordsUseCase
 import com.taehee.domain.usecase.word.RemoveWordUseCase
@@ -15,7 +14,6 @@ import javax.inject.Inject
 @HiltViewModel
 class EditViewModel @Inject constructor(
     getWordUseCase: GetWordsUseCase,
-    private val speakTtsUseCase: SpeakTtsUseCase,
     private val addWordUseCase: AddWordUseCase,
     private val removeWordUseCase: RemoveWordUseCase,
 ) : ViewModel() {
@@ -29,9 +27,5 @@ class EditViewModel @Inject constructor(
 
     fun deleteWord(word: Word) {
         removeWordUseCase(word, viewModelScope)
-    }
-
-    fun wordClicked(text: String) {
-        speakTtsUseCase(text)
     }
 }

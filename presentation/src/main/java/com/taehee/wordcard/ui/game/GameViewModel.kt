@@ -1,16 +1,16 @@
 package com.taehee.wordcard.ui.game
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.taehee.domain.model.Game
 import com.taehee.domain.usecase.word.GetGameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,53 +20,63 @@ class GameViewModel @Inject constructor(
 
     val score = MutableLiveData(0)
 
-    val items: MutableLiveData<List<Game>> = MutableLiveData<List<Game>>().apply {
-        getGameUseCase(viewModelScope) { value = it }
+    private val _uiState = MutableStateFlow(GameUiState())
+    val uiState: StateFlow<GameUiState> = _uiState.asStateFlow()
+
+    private var fetchJob: Job? = null
+
+    init {
+        fetchGame()
+    }
+
+    fun fetchGame() {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
+            _uiState.update {
+                it.copy(score = 0, isClickable = false, isGameWin = false)
+            }
+            val gameList: List<Game> = withContext(Dispatchers.IO) {
+                getGameUseCase()
+            }
+            _uiState.update {
+                it.copy(isClickable = true, gameList = gameList)
+            }
+        }
     }
 
     fun reGame() {
-        Log.i("taehee", "reGame")
-        _gameComplete.value = false
-        getGameUseCase(viewModelScope) { items.value = it }
-        score.value = 0
-    }
-
-    private val _completeLoading = MutableLiveData<Boolean>()
-    val completeLoading: LiveData<Boolean> get() = _completeLoading
-
-    private val _gameComplete = MutableLiveData<Boolean>()
-    val gameComplete: LiveData<Boolean> = _gameComplete
-
-    init {
-        _completeLoading.value = true
-        _gameComplete.value = false
+        fetchGame()
     }
 
     private fun checkComplete() {
-        viewModelScope.launch {
-            flow {
-                emit(items.value!!.isNotEmpty() &&
-                        (items.value!!.size == items.value!!.filter {
-                            it.state == Game.GameState.SUCCESS
-                        }.size))
-            }.collect {
-                _gameComplete.value = it
+        if (_uiState.value.gameList.size == _uiState.value.gameList.filter {
+                it.state == Game.GameState.SUCCESS
+            }.size) {
+            _uiState.update {
+                it.copy(isGameWin = true)
             }
         }
     }
 
     fun select(game: Game) {
-        if (game.state == Game.GameState.NONE) {
-            _completeLoading.value = false
+        viewModelScope.launch {
+            if (game.state == Game.GameState.NONE && _uiState.value.isClickable) {
+                _uiState.update {
+                    it.copy(isClickable = false)
+                }
 
-            items.value!!.update(Game(game.name, game.num, Game.GameState.FLIP)).also {
-                items.value = it
-            }
+                _uiState.value.gameList.update(Game(game.name, game.num, Game.GameState.FLIP))
+                    .also { games ->
+                        _uiState.update {
+                            it.copy(gameList = games)
+                        }
+                    }
 
-            val flipList = items.value!!.flipList()
-            viewModelScope.launch {
+
+                val flipList = _uiState.value.gameList.flipList()
                 if (flipList.size == 2) {
                     val state = if (flipList.isSame()) {
+                        delay(100)
                         score.value = score.value?.plus(10)
                         Game.GameState.SUCCESS
                     } else {
@@ -75,15 +85,24 @@ class GameViewModel @Inject constructor(
                         Game.GameState.NONE
                     }
                     flipList.map {
-                        items.value!!.update(Game(it.name, it.num, state)).also { update ->
-                            items.value = update
-                        }
+                        _uiState.value.gameList.update(Game(it.name, it.num, state))
+                            .also { update ->
+                                _uiState.update {
+                                    it.copy(gameList = update)
+                                }
+                            }
                     }
                     checkComplete()
+                    _uiState.update {
+                        it.copy(isClickable = true)
+                    }
+                } else {
+                    delay(100)
+                    _uiState.update {
+                        it.copy(isClickable = true)
+                    }
                 }
-                _completeLoading.value = true
             }
         }
-
     }
 }

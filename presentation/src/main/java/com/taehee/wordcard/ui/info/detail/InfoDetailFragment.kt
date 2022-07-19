@@ -1,10 +1,10 @@
 package com.taehee.wordcard.ui.info.detail
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
@@ -22,7 +22,7 @@ class InfoDetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_info_detail, container, false)
         return binding.root
     }
@@ -31,6 +31,7 @@ class InfoDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val url = args.url
+        binding.webView.setBackgroundColor(Color.TRANSPARENT)
         binding.webView.loadUrl(url)
     }
 }

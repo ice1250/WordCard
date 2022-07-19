@@ -39,12 +39,14 @@ class InfoFragment : Fragment() {
         binding.viewModel = viewModel
         with(binding.recyclerView) {
             setHasFixedSize(true)
-            adapter = InfoRecyclerViewAdapter() {
+            adapter = InfoRecyclerViewAdapter {
                 val action = InfoFragmentDirections.actionInfoFragmentToInfoDetailFragment(it.html_url)
                 findNavController().navigate(action)
             }
             addItemDecoration(InfoItemDecoration(4))
         }
-        viewModel.getGithubRepositories("ice1250")
+        if (viewModel.githubRepositories.value == null){
+            viewModel.getGithubRepositories("ice1250")
+        }
     }
 }
