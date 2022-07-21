@@ -1,12 +1,13 @@
 package com.taehee.wordcard.ui.main
 
+import android.animation.ObjectAnimator
+import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.ViewTreeObserver
-import androidx.activity.viewModels
+import android.view.animation.AnticipateInterpolator
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.taehee.wordcard.R
@@ -17,12 +18,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val sharedViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-//        hideSystemUI()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -44,25 +43,24 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        initSplash()
-    }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            splashScreen.setOnExitAnimationListener { splashScreenView ->
+                // Create your custom animation.
+                val slideUp = ObjectAnimator.ofFloat(
+                    splashScreenView,
+                    View.TRANSLATION_Y,
+                    0f,
+                    -splashScreenView.height.toFloat()
+                )
+                slideUp.interpolator = AnticipateInterpolator()
+                slideUp.duration = 1000L
 
-    private fun initSplash() {
-        val content: View = findViewById(android.R.id.content)
-        content.viewTreeObserver.addOnPreDrawListener(
-            object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    return if (sharedViewModel.completeInit.value == true) {
-                        content.viewTreeObserver.removeOnPreDrawListener(this)
-                        true
-                    } else false
-                }
-            },
-        )
-    }
+                // Call SplashScreenView.remove at the end of your custom animation.
+                slideUp.doOnEnd { splashScreenView.remove() }
 
-    private fun hideSystemUI() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+                // Run your animation.
+                slideUp.start()
+            }
+        }
     }
-
 }

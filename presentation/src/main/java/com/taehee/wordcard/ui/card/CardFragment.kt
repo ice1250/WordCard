@@ -53,7 +53,6 @@ class CardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
 
-        binding.root.setOnTouchListener { _, motionEvent -> onTouchView(motionEvent) }
         binding.cardView.setOnTouchListener { _, motionEvent -> onTouchView(motionEvent) }
         binding.cardView.setOnClickListener {
             sharedViewModel.speak(binding.wordText.text.toString())
@@ -70,13 +69,6 @@ class CardFragment : Fragment() {
                 }
             }
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect {
-                    binding.cardView.isClickable = !it.isFetchingCard
-                }
-            }
-        }
     }
 
     private fun onTouchView(motionEvent: MotionEvent): Boolean {
@@ -85,7 +77,7 @@ class CardFragment : Fragment() {
                 angle = 10,
                 size = listOf(Size.LARGE),
                 position = Position.Absolute(motionEvent.rawX, motionEvent.rawY),
-                emitter = Emitter(300, TimeUnit.MILLISECONDS).perSecond(100)
+                emitter = Emitter(100, TimeUnit.MILLISECONDS).perSecond(50)
             ))
         }
         return false

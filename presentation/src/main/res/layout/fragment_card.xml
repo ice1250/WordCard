@@ -19,16 +19,14 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
-        android:focusable="true"
         tools:context=".ui.card.CardFragment">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
+            cardShow="@{viewModel.uiState}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="8dp"
-            android:visibility="@{viewModel.uiState.card == null ? View.GONE: View.VISIBLE, default=visible }"
             app:cardBackgroundColor="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,13 +37,13 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/wordText"
+                card="@{viewModel.uiState}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:autoSizeTextType="uniform"
                 android:gravity="center"
                 android:lines="1"
-                android:text="@{viewModel.uiState.card.name}"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
                 android:textColor="?android:attr/textColorPrimary"
                 tools:text="가" />
@@ -58,11 +56,11 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/errorMessage"
+            show="@{viewModel.uiState}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.uiState.errorMessage}"
+            android:text="카드를 등록 해 주세요"
             android:textSize="30sp"
-            android:visibility="@{viewModel.uiState.errorMessage.empty ? View.GONE: View.VISIBLE, default=gone }"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,10 +68,10 @@
 
         <ProgressBar
             android:id="@+id/progressBar"
+            show="@{viewModel.uiState}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:theme="@style/progressbar_color"
-            android:visibility="@{viewModel.uiState.fetchingCard ? View.VISIBLE : View.GONE, default=visible}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
