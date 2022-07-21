@@ -35,18 +35,19 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun cardRefreshFinished() {
+    fun refreshFinished(card: Boolean = false, game: Boolean = false) {
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(needRefreshCard = false)
-            }
-        }
-    }
-
-    fun gameRefreshFinished() {
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(needRefreshGame = false)
+            when {
+                card -> {
+                    _uiState.update {
+                        it.copy(needRefreshCard = false)
+                    }
+                }
+                game -> {
+                    _uiState.update {
+                        it.copy(needRefreshGame = false)
+                    }
+                }
             }
         }
     }

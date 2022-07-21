@@ -65,7 +65,7 @@ class CardFragment : Fragment() {
                 sharedViewModel.uiState.collect {
                     if (it.needRefreshCard) {
                         viewModel.fetchCard(isNeedDelay = false)
-                        sharedViewModel.cardRefreshFinished()
+                        sharedViewModel.refreshFinished(card = true)
                     }
                 }
             }

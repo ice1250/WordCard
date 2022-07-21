@@ -1,8 +1,9 @@
 package com.taehee.domain.repository
 
 import com.taehee.domain.model.GithubRepo
+import kotlinx.coroutines.flow.Flow
 
 interface GithubRepository {
 
-    suspend fun getRepos(owner: String): List<GithubRepo>
+    fun getRepos(owner: String): Flow<List<GithubRepo>>
 }

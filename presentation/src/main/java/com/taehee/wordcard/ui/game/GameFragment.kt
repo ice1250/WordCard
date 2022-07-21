@@ -74,9 +74,9 @@ class GameFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 sharedViewModel.uiState.collect {
-                    if (it.needRefreshCard) {
+                    if (it.needRefreshGame) {
                         viewModel.reGame()
-                        sharedViewModel.gameRefreshFinished()
+                        sharedViewModel.refreshFinished(game = true)
                     }
                 }
             }

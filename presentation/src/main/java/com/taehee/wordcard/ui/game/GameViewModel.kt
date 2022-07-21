@@ -1,6 +1,5 @@
 package com.taehee.wordcard.ui.game
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.taehee.domain.model.Game
@@ -18,8 +17,6 @@ class GameViewModel @Inject constructor(
     private val getGameUseCase: GetGameUseCase,
 ) : ViewModel() {
 
-    val score = MutableLiveData(0)
-
     private val _uiState = MutableStateFlow(GameUiState())
     val uiState: StateFlow<GameUiState> = _uiState.asStateFlow()
 
@@ -29,7 +26,7 @@ class GameViewModel @Inject constructor(
         fetchGame()
     }
 
-    fun fetchGame() {
+    private fun fetchGame() {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             _uiState.update {
@@ -48,18 +45,9 @@ class GameViewModel @Inject constructor(
         fetchGame()
     }
 
-    private fun checkComplete() {
-        if (_uiState.value.gameList.size == _uiState.value.gameList.filter {
-                it.state == Game.GameState.SUCCESS
-            }.size) {
-            _uiState.update {
-                it.copy(isGameWin = true)
-            }
-        }
-    }
-
     fun select(game: Game) {
-        viewModelScope.launch {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
             if (game.state == Game.GameState.NONE && _uiState.value.isClickable) {
                 _uiState.update {
                     it.copy(isClickable = false)
@@ -77,22 +65,32 @@ class GameViewModel @Inject constructor(
                 if (flipList.size == 2) {
                     val state = if (flipList.isSame()) {
                         delay(100)
-                        score.value = score.value?.plus(10)
+                        _uiState.update {
+                            it.copy(score = _uiState.value.score.plus(10))
+                        }
                         Game.GameState.SUCCESS
                     } else {
                         delay(1000)
-                        score.value = score.value?.minus(10)
+                        _uiState.update {
+                            it.copy(score = _uiState.value.score.minus(10))
+                        }
                         Game.GameState.NONE
                     }
-                    flipList.map {
-                        _uiState.value.gameList.update(Game(it.name, it.num, state))
+                    flipList.map { game ->
+                        _uiState.value.gameList.update(Game(game.name, game.num, state))
                             .also { update ->
                                 _uiState.update {
                                     it.copy(gameList = update)
                                 }
                             }
                     }
-                    checkComplete()
+                    if (_uiState.value.gameList.size == _uiState.value.gameList.filter {
+                            it.state == Game.GameState.SUCCESS
+                        }.size) {
+                        _uiState.update {
+                            it.copy(isGameWin = true)
+                        }
+                    }
                     _uiState.update {
                         it.copy(isClickable = true)
                     }
