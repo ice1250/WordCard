@@ -2,21 +2,21 @@ package com.taehee.wordcard.di
 
 import android.content.Context
 import android.speech.tts.TextToSpeech
+import com.taehee.device.repository.TtsRepositoryImpl
+import com.taehee.domain.repository.TtsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
 import java.util.*
-import javax.inject.Singleton
 
+@InstallIn(ViewModelComponent::class)
 @Module
-@InstallIn(SingletonComponent::class)
-object DeviceModule {
+class TtsModule {
 
     @Provides
-    @Singleton
-    fun provideTextToSpeak(@ApplicationContext appContext: Context): TextToSpeech {
+    fun provideTts(@ApplicationContext appContext: Context): TextToSpeech {
         lateinit var textToSpeech: TextToSpeech
         textToSpeech = TextToSpeech(appContext) {
             if (it != TextToSpeech.ERROR) {
@@ -24,6 +24,10 @@ object DeviceModule {
             }
         }
         return textToSpeech
+    }
 
+    @Provides
+    fun provideTtsRepository(repository: TtsRepositoryImpl): TtsRepository {
+        return repository
     }
 }

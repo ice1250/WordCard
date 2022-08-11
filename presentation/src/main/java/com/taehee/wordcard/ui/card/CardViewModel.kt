@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.taehee.domain.model.Card
-import com.taehee.domain.usecase.tts.SpeakTtsUseCase
+import com.taehee.domain.repository.TtsRepository
 import com.taehee.domain.usecase.word.GetCardUseCase
 import com.taehee.wordcard.ui.base.UiState
 import com.taehee.wordcard.ui.base.successOrNull
@@ -19,8 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CardViewModel @Inject constructor(
-    private val speakTtsUseCase: SpeakTtsUseCase,
     private val getCardUseCase: GetCardUseCase,
+    private val ttsRepository: TtsRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<Card>>(UiState.Loading)
@@ -52,7 +52,7 @@ class CardViewModel @Inject constructor(
 
     fun onClickedCard(uiState: UiState<Card>) {
         uiState.successOrNull()?.apply {
-            speakTtsUseCase(name)
+            ttsRepository.speak(name)
             fetchCard(true)
         }
     }
@@ -61,5 +61,10 @@ class CardViewModel @Inject constructor(
         viewModelScope.launch {
             _motionEventLiveData.value = motionEvent
         }
+    }
+
+    override fun onCleared() {
+        ttsRepository.stop()
+        super.onCleared()
     }
 }

@@ -1,11 +1,8 @@
 package com.taehee.wordcard.di
 
 import com.taehee.domain.repository.GithubRepository
-import com.taehee.domain.repository.TtsRepository
 import com.taehee.domain.repository.WordRepository
 import com.taehee.domain.usecase.github.GetGithubReposUseCase
-import com.taehee.domain.usecase.tts.SpeakTtsUseCase
-import com.taehee.domain.usecase.tts.StopTtsUseCase
 import com.taehee.domain.usecase.word.*
 import dagger.Module
 import dagger.Provides
@@ -39,16 +36,6 @@ object UseCaseModule {
     @Provides
     fun provideRemoveWordUseCase(repository: WordRepository): RemoveWordUseCase {
         return RemoveWordUseCase(repository)
-    }
-
-    @Provides
-    fun provideSpeakTtsUseCase(repository: TtsRepository): SpeakTtsUseCase {
-        return SpeakTtsUseCase(repository)
-    }
-
-    @Provides
-    fun provideStopTtsUseCase(repository: TtsRepository): StopTtsUseCase {
-        return StopTtsUseCase(repository)
     }
 
     @Provides

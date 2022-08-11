@@ -2,8 +2,6 @@ package com.taehee.wordcard.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.taehee.domain.usecase.tts.SpeakTtsUseCase
-import com.taehee.domain.usecase.tts.StopTtsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +12,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val stopTtsUseCase: StopTtsUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MainUiState())
@@ -43,10 +40,5 @@ class MainViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    override fun onCleared() {
-        stopTtsUseCase()
-        super.onCleared()
     }
 }

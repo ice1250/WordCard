@@ -1,16 +1,17 @@
 package com.taehee.device.repository
 
-import com.taehee.device.source.TtsSource
+import android.speech.tts.TextToSpeech
 import com.taehee.domain.repository.TtsRepository
 import javax.inject.Inject
 
-class TtsRepositoryImpl @Inject constructor(private val source: TtsSource) :
+class TtsRepositoryImpl @Inject constructor(private val tts: TextToSpeech) :
     TtsRepository {
     override fun speak(text: String) {
-        source.speak(text)
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
     }
 
     override fun stop() {
-        source.stop()
+        tts.stop()
+        tts.shutdown()
     }
 }
