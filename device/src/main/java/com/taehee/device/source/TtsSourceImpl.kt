@@ -3,13 +3,13 @@ package com.taehee.device.source
 import android.speech.tts.TextToSpeech
 import javax.inject.Inject
 
-class TtsSourceImpl @Inject constructor(private val textToSpeech: TextToSpeech): TtsSource {
+class TtsSourceImpl @Inject constructor(private val tts: TextToSpeech) : TtsSource {
     override fun speak(text: String) {
-        textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
     }
 
     override fun stop() {
-        textToSpeech.stop()
-        textToSpeech.shutdown()
+        tts.stop()
+        tts.shutdown()
     }
 }

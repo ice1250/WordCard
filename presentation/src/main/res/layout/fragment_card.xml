@@ -23,10 +23,11 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
-            cardShow="@{viewModel.uiState}"
+            bind="@{viewModel.uiState}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="8dp"
+            android:onClick="@{()->viewModel.onClickedCard(viewModel.uiState)}"
             app:cardBackgroundColor="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +38,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/wordText"
-                card="@{viewModel.uiState}"
+                bind="@{viewModel.uiState}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -51,6 +52,7 @@
 
         <nl.dionsegijn.konfetti.xml.KonfettiView
             android:id="@+id/particle"
+            bind="@{viewModel.motionEventLiveData}"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

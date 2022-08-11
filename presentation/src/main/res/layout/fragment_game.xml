@@ -20,6 +20,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
+            gameViewModel="@{viewModel}"
             items="@{viewModel.uiState.gameList}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -60,7 +61,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="재시작"
-            android:visibility="@{viewModel.uiState.gameWin? View.VISIBLE:View.GONE, default=gone}"
+            bind="@{viewModel.uiState}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,6 +70,7 @@
 
         <nl.dionsegijn.konfetti.xml.KonfettiView
             android:id="@+id/particle"
+            bind="@{viewModel.uiState}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="10dp" />

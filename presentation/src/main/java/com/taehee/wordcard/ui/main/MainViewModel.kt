@@ -14,7 +14,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val speakTtsUseCase: SpeakTtsUseCase,
     private val stopTtsUseCase: StopTtsUseCase,
 ) : ViewModel() {
 
@@ -44,10 +43,6 @@ class MainViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    fun speak(text: String) {
-        speakTtsUseCase(text)
     }
 
     override fun onCleared() {

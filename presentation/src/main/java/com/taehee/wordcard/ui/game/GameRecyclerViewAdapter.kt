@@ -9,7 +9,7 @@ import com.taehee.wordcard.ui.custom.CustomAdapter
 import com.taehee.wordcard.ui.custom.DiffCallback
 
 class GameRecyclerViewAdapter(
-    onClick: (Game, View) -> Unit,
+    onClick: (Game) -> Unit,
 ) : CustomAdapter<Game, ViewholderGameBinding>(
     R.layout.viewholder_game, DiffCallback.game(),
     bind = { item, binding ->
@@ -21,7 +21,7 @@ class GameRecyclerViewAdapter(
         binding.textView.text = item.name
 
         binding.cardView.setOnClickListener {
-            onClick(item, it)
+            onClick(item)
         }
         if (item.state == Game.GameState.SUCCESS) {
             binding.cardView.setCardBackgroundColor(ContextCompat.getColor(binding.cardView.context,

@@ -8,6 +8,9 @@
             name="viewModel"
             type="com.taehee.wordcard.ui.edit.EditViewModel" />
 
+        <variable
+            name="sharedViewModel"
+            type="com.taehee.wordcard.ui.main.MainViewModel" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -19,7 +22,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            wordsItems="@{viewModel.uiState}"
+            editViewModel="@{viewModel}"
+            items="@{viewModel.uiState}"
+            sharedViewModel="@{sharedViewModel}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -35,6 +40,10 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button"
                 style="@style/Widget.Shrine.Button"
+                editText="@{editText}"
+                editViewModel="@{viewModel}"
+                sharedViewModel="@{sharedViewModel}"
+                recyclerView="@{recyclerView}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="추가"

@@ -1,23 +1,33 @@
 package com.taehee.wordcard.ui.card
 
+import android.view.MotionEvent
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.taehee.domain.model.Card
+import com.taehee.domain.usecase.tts.SpeakTtsUseCase
 import com.taehee.domain.usecase.word.GetCardUseCase
 import com.taehee.wordcard.ui.base.UiState
+import com.taehee.wordcard.ui.base.successOrNull
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CardViewModel @Inject constructor(
+    private val speakTtsUseCase: SpeakTtsUseCase,
     private val getCardUseCase: GetCardUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<Card>>(UiState.Loading)
     val uiState: StateFlow<UiState<Card>> = _uiState
+
+    private val _motionEventLiveData = MutableLiveData<MotionEvent>()
+    val motionEventLiveData = _motionEventLiveData
 
     private var fetchJob: Job? = null
 
@@ -25,22 +35,31 @@ class CardViewModel @Inject constructor(
         fetchCard()
     }
 
-    fun fetchCard(text: String? = null, isNeedDelay: Boolean = true) {
+    fun fetchCard(isNeedDelay: Boolean = false) {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             _uiState.value = UiState.Loading
+            if (isNeedDelay) {
+                delay(1000)
+            }
+            getCardUseCase().collect {
+                _uiState.value =
+                    if (it.name.isNotEmpty()) UiState.Success(it) else UiState.Error(
+                        Throwable())
+            }
+        }
+    }
 
-            val card: Card? = withContext(Dispatchers.IO) {
-                if (isNeedDelay) {
-                    delay(1000)
-                }
-                getCardUseCase(text)
-            }
-            if (card != null) {
-                _uiState.value = UiState.Success(card)
-            } else {
-                _uiState.value = UiState.Error(Throwable())
-            }
+    fun onClickedCard(uiState: UiState<Card>) {
+        uiState.successOrNull()?.apply {
+            speakTtsUseCase(name)
+            fetchCard(true)
+        }
+    }
+
+    fun onTouchedCard(motionEvent: MotionEvent) {
+        viewModelScope.launch {
+            _motionEventLiveData.value = motionEvent
         }
     }
 }

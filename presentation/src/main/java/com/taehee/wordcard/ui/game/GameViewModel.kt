@@ -46,9 +46,10 @@ class GameViewModel @Inject constructor(
     }
 
     fun select(game: Game) {
-        fetchJob?.cancel()
-        fetchJob = viewModelScope.launch {
-            if (game.state == Game.GameState.NONE && _uiState.value.isClickable) {
+
+        if (game.state == Game.GameState.NONE && _uiState.value.isClickable) {
+            fetchJob?.cancel()
+            fetchJob = viewModelScope.launch {
                 _uiState.update {
                     it.copy(isClickable = false)
                 }

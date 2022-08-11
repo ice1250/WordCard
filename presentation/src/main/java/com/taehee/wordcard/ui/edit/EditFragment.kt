@@ -39,32 +39,15 @@ class EditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-        binding.button.setOnClickListener {
-            binding.editText.text.toString().isNotEmpty().apply { }
-            if (binding.editText.text.toString().isNotEmpty()) {
-                viewModel.addWord(binding.editText.text.toString())
-                binding.editText.text?.clear()
-                mainViewModel.wordChanged()
-                binding.recyclerView.postDelayed({
-                    binding.recyclerView.smoothScrollToPosition(binding.recyclerView.adapter!!.itemCount)
-                }, 100)
+        binding.sharedViewModel = mainViewModel
 
-            }
-        }
         binding.recyclerView.apply {
-            setHasFixedSize(true)
-            adapter = EditRecyclerViewAdapter(
-                { mainViewModel.speak(it.name) },
-                {
-                    viewModel.deleteWord(it)
-                    mainViewModel.wordChanged()
-                }
-            )
-            addItemDecoration(EditItemDecoration(4))
             TedKeyboardObserver(requireActivity()).listen {
                 if (it) {
-                    if (adapter!!.itemCount > 0) {
-                        smoothScrollToPosition(adapter!!.itemCount - 1)
+                    adapter?.itemCount.also { count ->
+                        if (count != null && count > 0) {
+                            smoothScrollToPosition(count - 1)
+                        }
                     }
                 }
             }

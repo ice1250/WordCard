@@ -17,13 +17,6 @@ import com.taehee.wordcard.databinding.FragmentGameBinding
 import com.taehee.wordcard.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import nl.dionsegijn.konfetti.core.Angle
-import nl.dionsegijn.konfetti.core.Party
-import nl.dionsegijn.konfetti.core.Position
-import nl.dionsegijn.konfetti.core.Spread
-import nl.dionsegijn.konfetti.core.emitter.Emitter
-import nl.dionsegijn.konfetti.core.models.Size
-import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class GameFragment : Fragment() {
@@ -49,27 +42,6 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-        with(binding.recyclerView) {
-            setHasFixedSize(true)
-            adapter = GameRecyclerViewAdapter(onClick = { game, view ->
-                viewModel.select(game)
-                val location = IntArray(2)
-                view.getLocationOnScreen(location)
-
-                binding.particle.start(Party(
-                    size = listOf(Size.MEDIUM),
-                    position = Position.Absolute(location[0].toFloat() + view.width / 2,
-                        location[1].toFloat()),
-                    emitter = Emitter(100, TimeUnit.MILLISECONDS).perSecond(200)
-                ))
-            })
-            addItemDecoration(GameItemDecoration(4, 10))
-        }
-
-        binding.restartButton.setOnClickListener {
-            binding.restartButton.visibility = View.GONE
-            viewModel.reGame()
-        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -81,37 +53,9 @@ class GameFragment : Fragment() {
                 }
             }
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect {
-                    if (it.isGameWin) {
-                        binding.particle.start(parade())
-                    }
-                }
-            }
+
+        binding.restartButton.setOnClickListener {
+            viewModel.reGame()
         }
     }
-
-    private fun parade(): List<Party> {
-        val party = Party(
-            speed = 10f,
-            maxSpeed = 30f,
-            damping = 0.9f,
-            angle = Angle.RIGHT - 45,
-            spread = Spread.SMALL,
-            colors = listOf(0xfce18a, 0xff726d, 0xf4306d, 0xb48def),
-            emitter = Emitter(duration = 1, TimeUnit.SECONDS).perSecond(100),
-            position = Position.Relative(0.0, 0.5)
-        )
-
-        return listOf(
-            party,
-            party.copy(
-                angle = party.angle - 90, // flip angle from right to left
-                position = Position.Relative(1.0, 0.5)
-            ),
-        )
-    }
-
-
 }

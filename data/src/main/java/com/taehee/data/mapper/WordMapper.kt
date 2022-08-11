@@ -12,8 +12,8 @@ object WordMapper {
         return wordEntities.map { Word(it.name, it.time) }
     }
 
-    fun toCard(wordEntity: WordEntity): Card {
-        val card = Card(wordEntity.name)
+    fun toCard(wordEntity: WordEntity?): Card {
+        val card = Card(wordEntity?.name ?: "")
         card.color = colors[SecureRandom.getInstanceStrong().nextInt((colors.size))]
         return card
     }

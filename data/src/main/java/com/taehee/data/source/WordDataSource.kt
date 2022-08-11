@@ -8,7 +8,7 @@ import javax.inject.Inject
 interface WordDataSource {
     fun getWords(): Flow<List<WordEntity>>
     fun getGames(): List<WordEntity>
-    fun getRandomWord(name: String?): WordEntity?
+    fun getRandomWord(): Flow<WordEntity?>
     fun addWord(word: WordEntity)
     fun removeWord(word: WordEntity)
 }
@@ -21,10 +21,7 @@ class WordDataSourceImpl @Inject constructor(private val wordDao: WordDao) : Wor
         return wordDao.getGames()
     }
 
-    override fun getRandomWord(name: String?): WordEntity? = wordDao.getRandomWord(
-        if (wordDao.getCount() >= 2) name
-        else null
-    )
+    override fun getRandomWord() = wordDao.getRandomWord()
 
     override fun addWord(word: WordEntity) = wordDao.addWord(word)
 

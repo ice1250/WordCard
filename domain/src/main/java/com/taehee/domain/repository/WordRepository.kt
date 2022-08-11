@@ -15,6 +15,6 @@ interface WordRepository {
 
     suspend fun removeWord(word: Word)
 
-    suspend fun getCard(name: String?): Card?
+    fun getCard(): Flow<Card>
 
 }

@@ -7,7 +7,6 @@ import com.taehee.wordcard.ui.custom.CustomAdapter
 import com.taehee.wordcard.ui.custom.DiffCallback
 
 class EditRecyclerViewAdapter(
-    onClick: (Word) -> Unit,
     onDeleteClick: (Word) -> Unit,
 ) : CustomAdapter<Word, ViewholderEditBinding>(
     R.layout.viewholder_edit, DiffCallback.word(),
@@ -15,7 +14,6 @@ class EditRecyclerViewAdapter(
         binding.apply {
             textView.text = item.name
             delete.setOnClickListener { onDeleteClick(item) }
-            cardView.setOnClickListener { onClick(item) }
         }
     }
 )

@@ -27,7 +27,7 @@ class WordRepositoryImpl @Inject constructor(
     override suspend fun removeWord(word: Word) =
         dataSource.removeWord(WordMapper.toWordEntity(word))
 
-    override suspend fun getCard(name: String?): Card? {
-        return dataSource.getRandomWord(name)?.let { WordMapper.toCard(it) }
+    override fun getCard(): Flow<Card> {
+        return dataSource.getRandomWord().map { WordMapper.toCard(it) }
     }
 }
