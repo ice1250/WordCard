@@ -6,22 +6,22 @@
     app:startDestination="@id/cardFragment">
     <fragment
         android:id="@+id/cardFragment"
-        android:name="com.taehee.wordcard.ui.card.CardFragment"
+        android:name="com.taehee.wordcard.presentation.ui.card.CardFragment"
         android:label="fragment_card"
         tools:layout="@layout/fragment_card" />
     <fragment
         android:id="@+id/editFragment"
-        android:name="com.taehee.wordcard.ui.edit.EditFragment"
+        android:name="com.taehee.wordcard.presentation.ui.edit.EditFragment"
         android:label="fragment_edit"
         tools:layout="@layout/fragment_edit" />
     <fragment
         android:id="@+id/gameFragment"
-        android:name="com.taehee.wordcard.ui.game.GameFragment"
+        android:name="com.taehee.wordcard.presentation.ui.game.GameFragment"
         android:label="fragment_game"
         tools:layout="@layout/fragment_game" />
     <fragment
         android:id="@+id/infoFragment"
-        android:name="com.taehee.wordcard.ui.info.InfoFragment"
+        android:name="com.taehee.wordcard.presentation.ui.info.InfoFragment"
         android:label="fragment_info"
         tools:layout="@layout/fragment_info" >
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/infoDetailFragment"
-        android:name="com.taehee.wordcard.ui.info.detail.InfoDetailFragment"
+        android:name="com.taehee.wordcard.presentation.ui.info.detail.InfoDetailFragment"
         android:label="InfoDetailFragment" >
         <argument
             android:name="url"

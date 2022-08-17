@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.taehee.wordcard.ui.info.InfoViewModel" />
+            type="com.taehee.wordcard.presentation.ui.info.InfoViewModel" />
 
     </data>
 

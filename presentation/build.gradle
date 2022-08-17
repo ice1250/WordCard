@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
@@ -10,7 +10,6 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.taehee.wordcard"
         minSdk 26
         targetSdk 31
         versionCode 1
@@ -35,33 +34,30 @@ android {
     dataBinding {
         enabled = true
     }
-    namespace 'com.taehee.wordcard'
 }
 
 dependencies {
-    implementation project(path: ':data')
-    implementation project(path: ':device')
     implementation project(path: ':domain')
 
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.activity:activity-ktx:1.5.0'
-    implementation 'androidx.fragment:fragment-ktx:1.5.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0'
+    implementation 'androidx.activity:activity-ktx:1.5.1'
+    implementation 'androidx.fragment:fragment-ktx:1.5.2'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
 
     // Navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
 
     // Splash Screen
-    implementation 'androidx.core:core-splashscreen:1.0.0-rc01'
+    implementation 'androidx.core:core-splashscreen:1.0.0'
 
     // Coroutine
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1-native-mt'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
 
     // Konfetti
     implementation 'nl.dionsegijn:konfetti-xml:2.0.2'
@@ -72,10 +68,9 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:2.42"
 
     // Room
-    implementation 'androidx.room:room-runtime:2.4.2'
-    kapt 'androidx.room:room-compiler:2.4.2'
-
-    implementation "androidx.room:room-ktx:2.4.2"
+    implementation 'androidx.room:room-runtime:2.4.3'
+    kapt 'androidx.room:room-compiler:2.4.3'
+    implementation "androidx.room:room-ktx:2.4.3"
 
     // Test
     testImplementation 'junit:junit:4.13.2'

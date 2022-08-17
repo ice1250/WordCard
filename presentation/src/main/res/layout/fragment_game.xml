@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.taehee.wordcard.ui.game.GameViewModel" />
+            type="com.taehee.wordcard.presentation.ui.game.GameViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.taehee.wordcard.ui.card.CardViewModel" />
+            type="com.taehee.wordcard.presentation.ui.card.CardViewModel" />
 
         <import type="android.graphics.Color" />
 
@@ -19,7 +19,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.card.CardFragment">
+        tools:context="com.taehee.wordcard.presentation.ui.card.CardFragment">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"

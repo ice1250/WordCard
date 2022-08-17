@@ -6,11 +6,11 @@
 
         <variable
             name="viewModel"
-            type="com.taehee.wordcard.ui.edit.EditViewModel" />
+            type="com.taehee.wordcard.presentation.ui.edit.EditViewModel" />
 
         <variable
             name="sharedViewModel"
-            type="com.taehee.wordcard.ui.main.MainViewModel" />
+            type="com.taehee.wordcard.presentation.ui.main.MainViewModel" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
