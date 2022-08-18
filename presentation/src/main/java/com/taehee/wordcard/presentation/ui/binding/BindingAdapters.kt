@@ -68,6 +68,7 @@ fun RecyclerView.bind(viewModel: GameViewModel, items: List<Game>?) {
         setHasFixedSize(true)
         adapter = GameRecyclerViewAdapter { viewModel.select(it) }
         addItemDecoration(GameItemDecoration(4, 10))
+        itemAnimator = null
     }
     (adapter as? GameRecyclerViewAdapter)?.submitList(items)
 }

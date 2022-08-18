@@ -22,6 +22,8 @@ class GameViewModel @Inject constructor(
 
     private var fetchJob: Job? = null
 
+    private var isClickable = false
+
     init {
         fetchGame()
     }
@@ -30,14 +32,15 @@ class GameViewModel @Inject constructor(
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             _uiState.update {
-                it.copy(score = 0, isClickable = false, isGameWin = false)
+                it.copy(score = 0, isGameWin = false)
             }
             val gameList: List<Game> = withContext(Dispatchers.IO) {
                 getGameUseCase()
             }
             _uiState.update {
-                it.copy(isClickable = true, gameList = gameList)
+                it.copy(gameList = gameList)
             }
+            isClickable = true
         }
     }
 
@@ -47,12 +50,10 @@ class GameViewModel @Inject constructor(
 
     fun select(game: Game) {
 
-        if (game.state == Game.GameState.NONE && _uiState.value.isClickable) {
+        if (game.state == Game.GameState.NONE && isClickable) {
+            isClickable = false
             fetchJob?.cancel()
             fetchJob = viewModelScope.launch {
-                _uiState.update {
-                    it.copy(isClickable = false)
-                }
 
                 _uiState.value.gameList.update(Game(game.name, game.num, Game.GameState.FLIP))
                     .also { games ->
@@ -64,14 +65,13 @@ class GameViewModel @Inject constructor(
 
                 val flipList = _uiState.value.gameList.flipList()
                 if (flipList.size == 2) {
+                    delay(1000)
                     val state = if (flipList.isSame()) {
-                        delay(100)
                         _uiState.update {
                             it.copy(score = _uiState.value.score.plus(10))
                         }
                         Game.GameState.SUCCESS
                     } else {
-                        delay(1000)
                         _uiState.update {
                             it.copy(score = _uiState.value.score.minus(10))
                         }
@@ -92,14 +92,10 @@ class GameViewModel @Inject constructor(
                             it.copy(isGameWin = true)
                         }
                     }
-                    _uiState.update {
-                        it.copy(isClickable = true)
-                    }
+                    isClickable = true
                 } else {
-                    delay(100)
-                    _uiState.update {
-                        it.copy(isClickable = true)
-                    }
+                    delay(500)
+                    isClickable = true
                 }
             }
         }
