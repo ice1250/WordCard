@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.taehee.presentation.R
-import com.taehee.presentation.databinding.FragmentInfoDetailBinding
+import com.taehee.wordcard.presentation.R
+import com.taehee.wordcard.presentation.databinding.FragmentInfoDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

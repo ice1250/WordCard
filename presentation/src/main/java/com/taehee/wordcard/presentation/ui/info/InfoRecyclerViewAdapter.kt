@@ -1,8 +1,8 @@
 package com.taehee.wordcard.presentation.ui.info
 
 import com.taehee.wordcard.domain.model.GithubRepo
-import com.taehee.presentation.R
-import com.taehee.presentation.databinding.ViewholderInfoBinding
+import com.taehee.wordcard.presentation.R
+import com.taehee.wordcard.presentation.databinding.ViewholderInfoBinding
 import com.taehee.wordcard.presentation.ui.custom.CustomAdapter
 import com.taehee.wordcard.presentation.ui.custom.DiffCallback
 

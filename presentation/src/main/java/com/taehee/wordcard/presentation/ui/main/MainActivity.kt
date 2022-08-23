@@ -10,8 +10,8 @@ import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.taehee.presentation.R
-import com.taehee.presentation.databinding.ActivityMainBinding
+import com.taehee.wordcard.presentation.R
+import com.taehee.wordcard.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

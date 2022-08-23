@@ -9,8 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.taehee.presentation.R
-import com.taehee.presentation.databinding.FragmentEditBinding
+import com.taehee.wordcard.presentation.R
+import com.taehee.wordcard.presentation.databinding.FragmentEditBinding
 import com.taehee.wordcard.presentation.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedkeyboardobserver.TedKeyboardObserver

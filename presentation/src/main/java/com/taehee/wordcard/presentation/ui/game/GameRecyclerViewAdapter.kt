@@ -4,9 +4,9 @@ import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.taehee.presentation.R
-import com.taehee.presentation.databinding.ViewholderGameBinding
 import com.taehee.wordcard.domain.model.Game
+import com.taehee.wordcard.presentation.R
+import com.taehee.wordcard.presentation.databinding.ViewholderGameBinding
 import com.taehee.wordcard.presentation.ui.custom.CustomAdapter
 import com.taehee.wordcard.presentation.ui.custom.DiffCallback
 

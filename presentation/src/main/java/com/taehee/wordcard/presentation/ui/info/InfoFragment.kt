@@ -9,8 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.taehee.presentation.R
-import com.taehee.presentation.databinding.FragmentInfoBinding
+import com.taehee.wordcard.presentation.R
+import com.taehee.wordcard.presentation.databinding.FragmentInfoBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

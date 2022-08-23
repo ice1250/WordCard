@@ -1,8 +1,8 @@
 package com.taehee.wordcard.presentation.ui.edit
 
 import com.taehee.wordcard.domain.model.Word
-import com.taehee.presentation.R
-import com.taehee.presentation.databinding.ViewholderEditBinding
+import com.taehee.wordcard.presentation.R
+import com.taehee.wordcard.presentation.databinding.ViewholderEditBinding
 import com.taehee.wordcard.presentation.ui.custom.CustomAdapter
 import com.taehee.wordcard.presentation.ui.custom.DiffCallback
 

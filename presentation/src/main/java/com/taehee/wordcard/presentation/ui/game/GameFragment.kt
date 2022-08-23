@@ -12,8 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.taehee.presentation.R
-import com.taehee.presentation.databinding.FragmentGameBinding
+import com.taehee.wordcard.presentation.R
+import com.taehee.wordcard.presentation.databinding.FragmentGameBinding
 import com.taehee.wordcard.presentation.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
