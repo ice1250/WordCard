@@ -42,7 +42,7 @@ dependencies {
     implementation project(":data")
     implementation project(":device")
     implementation project(":domain")
-    implementation project(":presentation")
+    implementation project(":presentation-compose")
 
     // Hilt dependencies
     implementation "com.google.dagger:hilt-android:2.42"
