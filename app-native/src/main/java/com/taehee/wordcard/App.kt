@@ -1,4 +1,4 @@
-package com.taehee.wordcard.app
+package com.taehee.wordcard
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

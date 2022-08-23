@@ -1,4 +1,4 @@
-package com.taehee.wordcard.app.di
+package com.taehee.wordcard.di
 
 import com.taehee.wordcard.domain.repository.GithubRepository
 import com.taehee.wordcard.domain.repository.WordRepository

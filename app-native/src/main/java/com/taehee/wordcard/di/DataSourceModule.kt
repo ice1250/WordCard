@@ -1,4 +1,4 @@
-package com.taehee.wordcard.app.di
+package com.taehee.wordcard.di
 
 import com.taehee.wordcard.data.source.GithubRemoteSource
 import com.taehee.wordcard.data.source.GithubRemoteSourceImpl

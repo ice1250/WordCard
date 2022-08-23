@@ -1,4 +1,4 @@
-package com.taehee.wordcard.app
+package com.taehee.wordcard
 
 import org.junit.Test
 

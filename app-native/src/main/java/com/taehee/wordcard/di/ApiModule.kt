@@ -1,4 +1,4 @@
-package com.taehee.wordcard.app.di
+package com.taehee.wordcard.di
 
 import android.app.Application
 import com.taehee.wordcard.data.service.GithubService
