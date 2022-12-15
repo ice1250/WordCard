@@ -42,8 +42,8 @@
                 style="@style/Widget.Shrine.Button"
                 editText="@{editText}"
                 editViewModel="@{viewModel}"
-                sharedViewModel="@{sharedViewModel}"
                 recyclerView="@{recyclerView}"
+                sharedViewModel="@{sharedViewModel}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="추가"
@@ -57,6 +57,7 @@
                 android:ems="10"
                 android:hint="단어를 입력 해 주세요"
                 android:inputType="textPersonName"
+                android:saveEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button"
                 app:layout_constraintStart_toStartOf="parent" />
