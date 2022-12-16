@@ -35,6 +35,7 @@ android {
     dataBinding {
         enabled = true
     }
+    namespace 'com.taehee.app'
 }
 
 dependencies {
